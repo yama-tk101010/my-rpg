@@ -159,60 +159,65 @@ h1 {
 .story-content { font-size: 1.1em; line-height: 1.8; margin: 30px 0; animation: fadeIn 2s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* --- スマホ対応 (縦幅はみ出し防止・完全版) --- */
+/* --- スマホ対応 (ログ固定・マップ修正版) --- */
 @media (max-width: 500px) {
-    /* bodyの高さを「ツールバーを除いた高さ」に固定 */
     body {
         padding: 0;
         margin: 0;
-        height: 100svh; /* small viewport height */
+        height: 100svh; /* アドレスバーを除いた画面の高さ */
         width: 100vw;
-        overflow: hidden; /* スクロール絶対禁止 */
-        justify-content: flex-start; /* 上詰め */
+        overflow: hidden; /* 全体のスクロール禁止 */
+        justify-content: flex-start;
     }
 
-    /* スマホのダンジョン画面ではタイトルを消して場所を確保 */
-    #dungeon-scene h1 {
-        display: none;
-    }
+    #dungeon-scene h1 { display: none; }
 
-    /* ゲーム枠を画面いっぱいに */
     #game-container {
         display: grid;
-        /* 左:マップ(80px) 右:ステータス(残り) */
-        grid-template-columns: 80px 1fr; 
-        /* 行: 3D / マップ / ログ(残り全部) / ボタン */
-        grid-template-rows: auto auto 1fr auto;
+        /* 左:マップエリア(90px確保) 右:ステータス(残り) */
+        grid-template-columns: 90px 1fr; 
+        /* 行: 3D / マップ / ログ(固定) / ボタン */
+        grid-template-rows: auto auto auto 1fr;
         gap: 2px;
         width: 100%;
-        height: 100%; /* bodyの100svhに合わせる */
+        height: 100%;
         padding: 2px 0;
         border: none;
         border-radius: 0;
         box-sizing: border-box;
     }
 
-    /* 1. 3Dビュー (高さをさらに抑える) */
+    /* 1. 3Dビュー (高さは画面の20%程度) */
     #main-area {
         grid-column: 1 / -1;
-        height: 18vh; /* 20vh -> 18vh に縮小 */
-        min-height: 100px; /* 最低限の高さ */
+        height: 20vh; 
+        min-height: 120px;
         border-left: none; border-right: none; border-radius: 0;
         margin-bottom: 2px;
     }
     #dungeon-canvas { height: 100%; width: auto; max-width: 100%; }
-    #enemy-img { width: 80px; height: 80px; } /* 敵も小さく */
+    #enemy-img { width: 90px; height: 90px; }
 
-    /* 2. 左: マップ */
+    /* 2. 左: マップ (崩れ防止のためサイズ固定) */
     #map-wrapper {
         grid-column: 1 / 2;
         justify-self: center;
-        width: 80px;
+        width: 90px; /* 枠を少し広めに */
     }
-    #map-area { width: 75px; height: 75px; }
-    #floor-display { font-size: 0.6em; padding-bottom: 0; border: none; }
+    #map-area { 
+        /* 10マス×8px = 80px ジャストにする(端数が出ないように) */
+        width: 80px; 
+        height: 80px;
+        /* グリッドの隙間をなくす */
+        gap: 0; 
+        border: 1px solid #555;
+    }
+    /* セルも強制的にサイズ指定 */
+    .cell { width: 8px !important; height: 8px !important; border: 0.5px solid #222; }
+    
+    #floor-display { font-size: 0.6em; padding-bottom: 2px; border: none; }
 
-    /* 2. 右: ステータス (文字サイズ調整) */
+    /* 2. 右: ステータス */
     #status {
         grid-column: 2 / 3;
         font-size: 0.7em; 
@@ -220,25 +225,28 @@ h1 {
         flex-direction: column; 
         justify-content: center; 
         align-items: stretch;
-        height: auto;
+        height: auto; /* マップと同じ高さになる */
         border-right: none; border-radius: 0;
     }
     .party-status { gap: 1px; width: 100%; }
     .party-status div { display: flex; justify-content: space-between; white-space: nowrap; }
     .job-badge-sm { width: 1em; margin-right: 2px; font-size: 0.9em; padding: 0 2px; }
 
-    /* 3. ログ (余った縦幅を全て使う設定) */
+    /* 3. ログ (★5行分固定表示★) */
     #log {
         grid-column: 1 / -1;
-        /* min-heightを0にすることで、画面が狭くても縮めるようにする */
-        min-height: 0; 
-        height: 100%; /* グリッドの割り当て分をフルに使う */
-        font-size: 0.75em;
+        /* 高さ固定 (文字サイズ0.8em * 1.2行高 * 5行 + パディング ≈ 90px) */
+        height: 90px; 
+        min-height: 90px;
+        max-height: 90px;
+        font-size: 0.8em;
         margin: 0;
         background: #111;
         padding: 4px 8px;
         border-left: none; border-right: none; border-radius: 0;
         box-sizing: border-box;
+        /* はみ出たらスクロール */
+        overflow-y: auto; 
     }
 
     /* バトルメッセージ */
@@ -248,23 +256,22 @@ h1 {
         border-radius: 0; border-left: none; border-right: none;
     }
 
-    /* 4. コントロール (一番下) */
+    /* 4. コントロール (残りのスペースに配置) */
     .controls {
         grid-column: 1 / -1;
         padding: 0 2px 2px 2px;
-        align-self: end;
+        align-self: end; /* 一番下に寄せる */
     }
 
-    /* ボタンを限界までコンパクトに */
     .move-pad { max-width: 100%; gap: 2px; margin: 0; }
     .move-pad .btn { 
-        height: 42px; /* さらに低く */
+        height: 45px; /* ボタン高さ */
         font-size: 0.85em; 
     }
     
     .battle-pad, .spell-pad, #target-controls { gap: 2px; }
     .battle-pad .btn, .spell-pad .btn { 
-        padding: 4px; font-size: 0.85em; height: 42px; 
+        padding: 4px; font-size: 0.85em; height: 45px; 
     }
     
     #btn-return { margin-top: 2px; height: 30px; font-size: 0.75em; padding: 0; }
