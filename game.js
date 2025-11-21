@@ -305,8 +305,6 @@ function updateTownStatus() {
         const btn = document.createElement('button');
         btn.id = 'btn-forest';
         btn.className = 'btn menu-btn';
-        btn.style.borderColor = '#55ff55';
-        btn.style.color = '#55ff55';
         btn.innerText = '⑤ 試練の森へ';
         btn.onclick = () => enterForest();
         menu.appendChild(btn);
