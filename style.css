@@ -159,97 +159,75 @@ h1 {
 .story-content { font-size: 1.1em; line-height: 1.8; margin: 30px 0; animation: fadeIn 2s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* --- スマホ対応 (画面幅いっぱいを使う修正版) --- */
+/* --- スマホ対応 (修正完全版) --- */
 @media (max-width: 500px) {
-    body {
-        padding: 0; /* ★画面端の余白を完全になくす */
-        overflow: hidden;
-    }
-
-    h1 {
-        font-size: 0.9rem;
-        margin: 4px 0 2px 0;
-    }
+    body { padding: 0; overflow: hidden; }
+    h1 { font-size: 0.9rem; margin: 4px 0 2px 0; }
 
     #game-container {
         display: grid;
+        /* 左:マップ(85px) 右:ステータス(残り) */
         grid-template-columns: 85px 1fr; 
+        /* 行: 3D / マップ&ステータス / ログ / ボタン */
         grid-template-rows: auto auto 1fr auto;
         gap: 4px;
-        height: 100vh; /* ★画面の高さいっぱいに */
-        width: 100%;   /* ★画面の横幅いっぱいに */
-        padding: 5px 0; /* ★左右のパディングを0にする */
-        border: none;   /* ★外枠を消して広さを確保 */
-        border-radius: 0;
+        height: 100vh; width: 100%;
+        padding: 5px 0; border: none; border-radius: 0;
     }
 
-    /* 1段目: 3Dビュー */
+    /* 1. 3Dビュー (全幅) */
     #main-area {
-        grid-column: 1 / -1;
-        height: 20vh;
-        min-height: 120px;
-        border-left: none; border-right: none; /* 左右の線を消す */
-        border-radius: 0;
+        grid-column: 1 / -1; /* ★全幅指定 */
+        height: 20vh; min-height: 120px;
+        border-left: none; border-right: none; border-radius: 0;
     }
     #dungeon-canvas { height: 100%; width: auto; max-width: 100%; }
     #enemy-img { width: 100px; height: 100px; }
 
-    /* 2段目左: マップ */
+    /* 2. 左: マップ */
     #map-wrapper {
-        grid-column: 1 / 2;
-        justify-self: center; /* 中央寄せ */
-        width: 85px;
+        grid-column: 1 / 2; justify-self: center; width: 85px;
     }
     #map-area { width: 80px; height: 80px; }
     #floor-display { font-size: 0.65em; }
 
-    /* 2段目右: ステータス */
+    /* 2. 右: ステータス */
     #status {
         grid-column: 2 / 3;
-        font-size: 0.75em;
-        padding: 4px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: stretch;
-        height: auto;
-        border-right: none; /* 右端の線を消す */
-        border-radius: 0;
+        font-size: 0.75em; padding: 4px;
+        flex-direction: column; justify-content: center; align-items: stretch;
+        height: auto; border-right: none; border-radius: 0;
     }
     .party-status { gap: 2px; width: 100%; }
     .party-status div { display: flex; justify-content: space-between; white-space: nowrap; }
     .job-badge-sm { width: 1.2em; margin-right: 2px; font-size: 0.9em; }
 
-    /* 3段目: ログ (横幅最大化) */
+    /* 3. ログ (全幅) */
     #log {
-        grid-column: 1 / -1;
-        height: auto;
-        min-height: 65px;
-        font-size: 0.8em;
-        margin: 0;
-        background: #111;
-        padding: 5px 8px; /* ★文字が端すぎないように内側に少し余白 */
-        border-left: none; border-right: none; /* 左右の線を消す */
-        border-radius: 0;
+        grid-column: 1 / -1; /* ★全幅指定 */
+        width: 100%;
+        height: auto; min-height: 65px;
+        font-size: 0.8em; margin: 0;
+        background: #111; padding: 5px 8px;
+        border-left: none; border-right: none; border-radius: 0;
+        box-sizing: border-box; /* 重要 */
     }
 
-    /* バトルメッセージ */
+    /* バトルメッセージ (全幅) */
     #battle-msg {
+        grid-column: 1 / -1;
         padding: 2px; font-size: 0.8em; margin-bottom: 1px;
         border-radius: 0; border-left: none; border-right: none;
     }
 
-    /* 4段目: コントロール */
+    /* 4. コントロール (全幅) */
     .controls {
-        grid-column: 1 / -1;
-        padding: 0 5px 5px 5px; /* 下と左右に少し余白 */
-        align-self: end;
+        grid-column: 1 / -1; /* ★全幅指定 */
+        padding: 0 5px 5px 5px; align-self: end;
     }
-
     .move-pad { max-width: 100%; gap: 2px; margin: 0; }
     .move-pad .btn { height: 45px; font-size: 0.9em; }
-    
     .battle-pad, .spell-pad, #target-controls { gap: 3px; }
     .battle-pad .btn, .spell-pad .btn { padding: 5px; font-size: 0.9em; height: 45px; }
-    
     #btn-return { margin-top: 2px; height: 35px; font-size: 0.8em; }
 }
