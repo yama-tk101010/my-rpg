@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Yama RPG</title>
+    <title>Yama RPG - Layout Fix</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Sawarabi+Gothic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -31,13 +31,12 @@
             <p>どこへ向かいますか？</p>
         </div>
         
-        <div class="menu-list" id="town-menu-list">
+        <div class="menu-list">
             <button class="btn menu-btn" onclick="townAction('inn')">① 宿屋 (回復)</button>
             <button class="btn menu-btn" onclick="townAction('shop')">② 道具屋 (売買)</button>
             <button class="btn menu-btn" onclick="townAction('temple')">③ 神殿 (転職/LvUP)</button>
             <button class="btn menu-btn" onclick="openCamp('town')">⛺ メニュー (装備/道具)</button>
             <button class="btn menu-btn btn-go" onclick="townAction('dungeon')">④ 地下迷宮へ</button>
-            <button id="btn-forest" class="btn menu-btn" disabled style="border-color:#5f5; color:#5f5;" onclick="enterForest()">⑤ 試練の森へ</button>
         </div>
         <div id="town-log" class="log-box">
             <p>あなたは町の広場に立っている。</p>
