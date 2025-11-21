@@ -159,112 +159,108 @@ h1 {
 .story-content { font-size: 1.1em; line-height: 1.8; margin: 30px 0; animation: fadeIn 2s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* --- スマホ対応 (ログ拡大版) --- */
+/* --- スマホ対応 (縦画面に収める調整) --- */
 @media (max-width: 500px) {
     body {
-        padding: 2px;
+        padding: 2px; /* 余白を極力減らす */
         overflow: hidden; /* スクロール防止 */
     }
 
     h1 {
-        font-size: 0.9rem; /* タイトルさらに小さく */
+        font-size: 1rem; /* タイトルを小さく */
         margin: 2px;
     }
 
     #game-container {
+        /* グリッドレイアウトで配置を整理 */
         display: grid;
-        /* 左:マップ(80px固定) 右:ステータス(残り全部) */
-        grid-template-columns: 85px 1fr; 
-        /* 上から: 3D / マップ&ステータス / ログ / ボタン */
-        grid-template-rows: auto auto 1fr auto;
-        gap: 4px;
-        height: 92vh; /* 画面いっぱい使う */
-        padding: 4px;
+        grid-template-columns: 1fr 1.2fr; /* 左(マップ):右(ステータス) */
+        grid-template-rows: auto auto auto 1fr;
+        gap: 5px;
+        height: 90vh; /* 画面の高さに合わせる */
+        padding: 5px;
         border: 1px solid #444;
     }
 
-    /* 1段目: 3Dビュー (高さを少し削ってログに回す) */
+    /* 1段目: 3Dビュー (横幅いっぱい) */
     #main-area {
         grid-column: 1 / -1;
-        height: 20vh; /* 25vh -> 20vh に縮小 */
-        min-height: 120px;
         border: 2px solid #2a2a2a;
+        height: 25vh; /* 高さを画面の25%に制限 */
+        min-height: 150px;
     }
     #dungeon-canvas {
-        height: 100%; width: auto; max-width: 100%;
+        height: 100%; 
+        width: auto; /* アスペクト比維持 */
+        max-width: 100%;
     }
+    /* 敵画像も少し小さく */
     #enemy-img {
-        width: 100px; height: 100px; /* 敵画像も少し小さく */
+        width: 120px; height: 120px;
     }
 
     /* 2段目左: マップ */
     #map-wrapper {
         grid-column: 1 / 2;
-        justify-self: start;
-        width: 85px;
+        justify-self: center;
+        gap: 0;
     }
     #map-area {
-        width: 80px; height: 80px; /* マップサイズ微減 */
+        width: 90px;  /* 小さくする */
+        height: 90px;
     }
-    #floor-display { font-size: 0.65em; }
+    #floor-display { font-size: 0.7em; }
 
-    /* 2段目右: ステータス (名前欄の無駄を省く) */
+    /* 2段目右: ステータス */
     #status {
         grid-column: 2 / 3;
-        font-size: 0.75em;
-        padding: 4px;
-        flex-direction: column;
+        font-size: 0.7em; /* 文字を小さく */
+        padding: 2px;
+        flex-direction: column; /* 縦並びに変更して詰め込む */
         justify-content: center;
-        align-items: stretch; /* 横幅いっぱいに */
-        height: auto; /* 高さはなりゆき */
+        align-items: flex-start;
+        height: 90px; /* マップと同じ高さに */
     }
-    .party-status { 
-        gap: 2px; 
-        width: 100%;
-    }
-    .party-status div {
-        display: flex;
-        justify-content: space-between; /* 名前とHPを左右に離す */
-        white-space: nowrap; /* 改行させない */
-    }
-    .job-badge-sm { width: 1.2em; margin-right: 2px; font-size: 0.9em; }
+    .party-status { gap: 1px; }
+    .job-badge-sm { width: 1em; margin-right: 1px; }
 
-    /* 3段目: ログ (ここを拡大！) */
+    /* 3段目: ログ (横幅いっぱい) */
     #log {
         grid-column: 1 / -1;
-        height: auto; /* グリッドの余りを全て使う */
-        min-height: 65px; /* 最低でも3行分は確保 */
-        font-size: 0.8em;
+        height: 40px; /* 高さを減らす */
+        font-size: 0.75em;
         margin: 0;
-        background: #111;
     }
 
     /* バトルメッセージ */
     #battle-msg {
-        padding: 2px; font-size: 0.8em; margin-bottom: 1px;
+        padding: 2px; font-size: 0.8em; margin-bottom: 2px;
     }
 
-    /* 4段目: コントロール */
+    /* 4段目: コントロール (横幅いっぱい) */
     .controls {
         grid-column: 1 / -1;
         padding: 0;
-        align-self: end;
+        align-self: end; /* 下に寄せる */
     }
 
-    /* ボタンを少し低くして圧迫感を減らす */
+    /* ボタンを指で押しやすい形に圧縮 */
     .move-pad {
-        max-width: 100%; gap: 2px; margin: 0;
+        max-width: 100%;
+        gap: 3px;
+        margin: 0;
     }
     .move-pad .btn {
-        height: 45px; /* 50px -> 45px */
+        height: 50px; /* 高さを抑える */
+        font-size: 0.8em;
+    }
+    
+    /* 戦闘ボタンなどもコンパクトに */
+    .battle-pad, .spell-pad, #target-controls {
+        gap: 3px;
+    }
+    .battle-pad .btn, .spell-pad .btn {
+        padding: 8px;
         font-size: 0.9em;
     }
-    
-    .battle-pad, .spell-pad, #target-controls { gap: 3px; }
-    .battle-pad .btn, .spell-pad .btn {
-        padding: 5px; font-size: 0.9em; height: 45px;
-    }
-    
-    /* 戻るボタン */
-    #btn-return { margin-top: 2px; height: 35px; font-size: 0.8em; }
 }
