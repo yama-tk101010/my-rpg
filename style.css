@@ -1,271 +1,99 @@
-@charset "UTF-8";
-
-/* --- 基本設定 --- */
-body { 
-    background-color: #121212; 
-    color: #e0e0e0; 
-    font-family: "Sawarabi Gothic", "Roboto Mono", monospace; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 10px;
-}
-
-h1 { 
-    margin: 5px; font-size: 1.5em; 
-    color: #ffd700; 
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); 
-}
-
-/* --- アイコン類 --- */
-.icon-mini { width: 24px; height: 24px; vertical-align: middle; border: 1px solid #555; border-radius: 4px; }
-.icon-placeholder { font-size: 20px; vertical-align: middle; margin-right: 5px; }
-.hero-icon-lg { width: 64px; height: 64px; border: 3px solid #ffd700; border-radius: 12px; margin-bottom: 10px; image-rendering: pixelated; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-
-/* --- 共通コンポーネント --- */
-.log-box {
-    height: 100px;
-    overflow-y: auto;
-    border: 1px solid #444;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 0.85em;
-    margin: 10px 0;
-    text-align: left;
-    background: #1e1e1e;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: inset 0 0 10px #000;
-}
-.log-box p { margin: 4px 0; border-bottom: 1px solid #333; padding-bottom: 2px; }
-
-/* ボタン設定 */
-.btn { 
-    background: linear-gradient(180deg, #3a3a3a, #222);
-    color: #e0e0e0; 
-    border: 1px solid #555; 
-    border-radius: 6px;
-    padding: 12px; 
-    cursor: pointer; 
-    font-family: inherit; font-weight: bold;
-    transition: 0.2s;
-    box-shadow: 0 4px 0 #111;
-    /* スマホでの選択防止 */
-    user-select: none; -webkit-user-select: none; touch-action: manipulation;
-}
-.btn:hover { background: linear-gradient(180deg, #4a4a4a, #333); transform: translateY(-2px); box-shadow: 0 6px 0 #111; }
-.btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #111; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(100%); transform: none; box-shadow: none; }
-
-/* --- 町の画面 --- */
-#town-scene {
-    width: 100%; max-width: 600px; text-align: center;
-    border: 2px solid #444; border-radius: 10px;
-    padding: 20px; margin-top: 20px;
-    background: #1a1a1a; box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-.status-row { 
-    font-size: 1.1em; margin: 5px 0;
-    display: flex; justify-content: center; align-items: center; gap: 10px;
-    background: #252525; padding: 5px; border-radius: 5px;
-}
-.menu-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
-.menu-btn { text-align: left; padding-left: 20px; font-size: 1.1em; }
-.btn-go { border-color: #ffd700; color: #ffd700; background: linear-gradient(180deg, #332b00, #221a00); }
-.job-badge { display: inline-block; background: #333; color: #aaa; font-size: 0.7em; padding: 2px 6px; border-radius: 4px; border: 1px solid #555; }
-
-/* --- 神殿画面 --- */
-#temple-scene { width: 100%; max-width: 600px; margin-top: 20px; }
-.screen-box { border: 2px solid #008888; border-radius: 10px; padding: 20px; text-align: center; background: #001111; box-shadow: 0 0 20px rgba(0, 255, 255, 0.1); }
-.job-btn { padding: 10px; font-size: 0.9em; background: #002222; color: #33ffff; border: 1px solid #005555; }
-.btn-selected { background-color: #ffd700 !important; color: #000 !important; border-color: #fff !important; box-shadow: 0 0 10px #ffd700; }
-#job-desc { margin: 10px 0; padding: 10px; background: #001a1a; border: 1px solid #005555; border-radius: 5px; min-height: 60px; font-size: 0.9em; color: #aaffff; }
-
-/* --- ダンジョン画面 --- */
-#dungeon-scene { width: 100%; display: flex; justify-content: center; }
-
-#game-container {
-    width: 100%; max-width: 700px;
-    border: 2px solid #444; border-radius: 8px;
-    padding: 10px; box-sizing: border-box;
-    display: grid; 
-    grid-template-columns: 1fr 150px; /* PC用レイアウト */
-    gap: 10px;
-    background: #111; box-shadow: 0 0 30px #000;
-}
-
-/* 3Dビュー */
-#main-area { 
-    display: flex; flex-direction: column; 
-    align-items: center; position: relative; overflow: hidden; 
-    border: 4px solid #2a2a2a; border-radius: 4px;
-}
-#dungeon-canvas { background: #000; width: 100%; max-width: 400px; height: auto; image-rendering: pixelated; }
-.cave-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.8) 100%); pointer-events: none; z-index: 5; }
-#enemy-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; max-width: 90%; max-height: 90%; object-fit: contain; image-rendering: pixelated; display: none; animation: popIn 0.5s; z-index: 10; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.8)); }
-@keyframes popIn { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 80% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); } }
-
-/* マップ */
-#map-wrapper { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-#floor-display { font-weight: bold; color: #ffd700; font-size: 0.9em; text-align: center; border-bottom: 1px solid #555; width: 100%; }
-#map-area { border: 2px solid #555; background: #000; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); width: 150px; height: 150px; }
-.cell { width: 100%; height: 100%; box-sizing: border-box; display: flex; justify-content: center; align-items: center; font-size: 10px; color: #000; }
-.cell-unknown { background-color: #000; }
-.cell-floor { background-color: #222; border: 1px solid #333; }
-.cell-wall { background-color: #3a2a1a; border: 1px solid #221100; }
-.cell-hero { background-color: #222; color: #fff !important; font-weight: bold; animation: blink 1s infinite; }
-.cell-stairs { background-image: url('stairs_icon.png'); background-size: cover; background-color: #222; }
-.cell-boss { background-image: url('skull_icon.png'); background-size: 80%; background-repeat: no-repeat; background-position: center; background-color: #500; }
-.cell-entrance { background-image: url('stairs_icon.png'); background-size: cover; background-color: #222; }
-@keyframes blink { 50% { opacity: 0.3; } }
-
-/* ステータス */
-#status { grid-column: 1 / -1; display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; align-items: flex-end; background: #1e1e1e; padding: 5px; border-radius: 5px; border: 1px solid #333; }
-.party-status { display: flex; flex-direction: column; font-size: 0.85em; gap: 4px; }
-.job-badge-sm { display: inline-block; background: #333; color: #aaa; font-size: 0.8em; width: 1.2em; text-align: center; border: 1px solid #555; margin-right: 4px; border-radius: 3px; }
-
-/* バトルメッセージ */
-#battle-msg { grid-column: 1 / -1; text-align: center; background: linear-gradient(90deg, #002244, #004488, #002244); color: #fff; padding: 8px; font-weight: bold; border: 1px solid #0055aa; border-radius: 4px; margin-bottom: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-
-/* コントロール */
-.controls { grid-column: 1 / -1; display: grid; gap: 8px; padding: 5px; }
-.move-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 260px; margin: 10px auto; }
-.move-pad .btn { width: 100%; height: 60px; padding: 0; display: flex; justify-content: center; align-items: center; font-size: 0.9em; }
-.battle-pad, .spell-pad { grid-template-columns: 1fr 1fr; display: none; }
-.btn-atk { border-color: #ff5555; color: #ffaaaa; background: linear-gradient(180deg, #440000, #220000); }
-.btn-magic { border-color: #33ffff; color: #aaffff; background: linear-gradient(180deg, #002222, #001111); }
-.btn-def { border-color: #5555ff; color: #aaaaff; background: linear-gradient(180deg, #000044, #000022); }
-#target-controls { grid-template-columns: 1fr; }
-#target-controls button { padding: 10px; height: auto; }
-
-/* VFX */
-#vfx-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; justify-content: center; align-items: center; z-index: 20; }
-.vfx-slash { position: absolute; width: 200px; height: 4px; background: #fff; box-shadow: 0 0 10px #fff; transform: rotate(-45deg); animation: anim-slash 0.2s ease-out forwards; }
-.vfx-fire { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, rgba(255,100,0,0.8) 0%, rgba(255,0,0,0) 70%); animation: anim-flash 0.5s ease-out forwards; }
-.vfx-heal { position: absolute; width: 100%; height: 100%; background: rgba(50, 255, 100, 0.4); animation: anim-fade-green 0.8s ease-out forwards; }
-.vfx-damage { position: absolute; width: 100%; height: 100%; background-color: rgba(255, 0, 0, 0.6); animation: anim-damage 0.3s ease-out forwards; }
-.shake-enemy { animation: anim-shake 0.4s; }
-.shake-screen { animation: anim-shake 0.4s; }
-@keyframes anim-slash { 0% { width: 0; opacity: 0; transform: rotate(-45deg) translateX(-50px); } 50% { width: 250px; opacity: 1; } 100% { width: 0; opacity: 0; transform: rotate(-45deg) translateX(50px); } }
-@keyframes anim-flash { 0% { opacity: 0; transform: scale(0.5); } 20% { opacity: 1; transform: scale(1.2); } 100% { opacity: 0; transform: scale(1.5); } }
-@keyframes anim-fade-green { 0% { opacity: 0; } 30% { opacity: 1; box-shadow: inset 0 0 50px #cfc; } 100% { opacity: 0; } }
-@keyframes anim-damage { 0% { opacity: 0; } 20% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes anim-shake { 0% { transform: translate(0, 0); } 25% { transform: translate(-10px, 5px); } 50% { transform: translate(10px, -5px); } 75% { transform: translate(-5px, 5px); } 100% { transform: translate(0, 0); } }
-
-/* プロローグ */
-#prologue-scene { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #000; color: #e0e0e0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; text-align: center; }
-.story-content { font-size: 1.1em; line-height: 1.8; margin: 30px 0; animation: fadeIn 2s ease-in; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* --- スマホ対応 (縦幅はみ出し防止・完全版) --- */
+/* --- スマホ対応 (完全版) --- */
 @media (max-width: 500px) {
-    /* bodyの高さを「ツールバーを除いた高さ」に固定 */
     body {
         padding: 0;
-        margin: 0;
-        height: 100svh; /* small viewport height */
-        width: 100vw;
-        overflow: hidden; /* スクロール絶対禁止 */
-        justify-content: flex-start; /* 上詰め */
+        overflow: hidden;
     }
 
-    /* スマホのダンジョン画面ではタイトルを消して場所を確保 */
-    #dungeon-scene h1 {
-        display: none;
+    h1 {
+        font-size: 0.9rem;
+        margin: 4px 0 2px 0;
     }
 
-    /* ゲーム枠を画面いっぱいに */
     #game-container {
         display: grid;
-        /* 左:マップ(80px) 右:ステータス(残り) */
-        grid-template-columns: 80px 1fr; 
-        /* 行: 3D / マップ / ログ(残り全部) / ボタン */
+        /* 左:マップ(85px) 右:ステータス(残り) */
+        grid-template-columns: 85px 1fr; 
+        /* 行: 3D / マップ&ステータス / ログ / ボタン */
         grid-template-rows: auto auto 1fr auto;
-        gap: 2px;
+        gap: 4px;
+        height: 100vh;
         width: 100%;
-        height: 100%; /* bodyの100svhに合わせる */
-        padding: 2px 0;
+        padding: 5px 0;
         border: none;
+        border-radius: 0;
+    }
+
+    /* 1段目: 3Dビュー (全幅) */
+    #main-area {
+        grid-column: 1 / -1; /* ★ここも全幅 */
+        height: 20vh;
+        min-height: 120px;
+        border-left: none; border-right: none;
+        border-radius: 0;
+    }
+    #dungeon-canvas { height: 100%; width: auto; max-width: 100%; }
+    #enemy-img { width: 100px; height: 100px; }
+
+    /* 2段目左: マップ */
+    #map-wrapper {
+        grid-column: 1 / 2;
+        justify-self: center;
+        width: 85px;
+    }
+    #map-area { width: 80px; height: 80px; }
+    #floor-display { font-size: 0.65em; }
+
+    /* 2段目右: ステータス */
+    #status {
+        grid-column: 2 / 3;
+        font-size: 0.75em;
+        padding: 4px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+        height: auto;
+        border-right: none;
+        border-radius: 0;
+    }
+    .party-status { gap: 2px; width: 100%; }
+    .party-status div { display: flex; justify-content: space-between; white-space: nowrap; }
+    .job-badge-sm { width: 1.2em; margin-right: 2px; font-size: 0.9em; }
+
+    /* 3段目: ログ (全幅) */
+    #log {
+        grid-column: 1 / -1; /* ★ここが重要！全幅指定 */
+        width: 100%;
+        height: auto;
+        min-height: 65px;
+        font-size: 0.8em;
+        margin: 0;
+        background: #111;
+        padding: 5px 8px;
+        border-left: none; border-right: none;
         border-radius: 0;
         box-sizing: border-box;
     }
 
-    /* 1. 3Dビュー (高さをさらに抑える) */
-    #main-area {
-        grid-column: 1 / -1;
-        height: 18vh; /* 20vh -> 18vh に縮小 */
-        min-height: 100px; /* 最低限の高さ */
-        border-left: none; border-right: none; border-radius: 0;
-        margin-bottom: 2px;
-    }
-    #dungeon-canvas { height: 100%; width: auto; max-width: 100%; }
-    #enemy-img { width: 80px; height: 80px; } /* 敵も小さく */
-
-    /* 2. 左: マップ */
-    #map-wrapper {
-        grid-column: 1 / 2;
-        justify-self: center;
-        width: 80px;
-    }
-    #map-area { width: 75px; height: 75px; }
-    #floor-display { font-size: 0.6em; padding-bottom: 0; border: none; }
-
-    /* 2. 右: ステータス (文字サイズ調整) */
-    #status {
-        grid-column: 2 / 3;
-        font-size: 0.7em; 
-        padding: 2px 4px;
-        flex-direction: column; 
-        justify-content: center; 
-        align-items: stretch;
-        height: auto;
-        border-right: none; border-radius: 0;
-    }
-    .party-status { gap: 1px; width: 100%; }
-    .party-status div { display: flex; justify-content: space-between; white-space: nowrap; }
-    .job-badge-sm { width: 1em; margin-right: 2px; font-size: 0.9em; padding: 0 2px; }
-
-    /* 3. ログ (余った縦幅を全て使う設定) */
-    #log {
-        grid-column: 1 / -1;
-        /* min-heightを0にすることで、画面が狭くても縮めるようにする */
-        min-height: 0; 
-        height: 100%; /* グリッドの割り当て分をフルに使う */
-        font-size: 0.75em;
-        margin: 0;
-        background: #111;
-        padding: 4px 8px;
-        border-left: none; border-right: none; border-radius: 0;
-        box-sizing: border-box;
-    }
-
-    /* バトルメッセージ */
+    /* バトルメッセージ (全幅) */
     #battle-msg {
-        grid-column: 1 / -1;
-        padding: 2px; font-size: 0.75em; margin-bottom: 0;
+        grid-column: 1 / -1; /* ★ここも全幅 */
+        padding: 2px; font-size: 0.8em; margin-bottom: 1px;
         border-radius: 0; border-left: none; border-right: none;
     }
 
-    /* 4. コントロール (一番下) */
+    /* 4段目: コントロール (全幅) */
     .controls {
-        grid-column: 1 / -1;
-        padding: 0 2px 2px 2px;
+        grid-column: 1 / -1; /* ★ここも全幅 */
+        padding: 0 5px 5px 5px;
         align-self: end;
     }
 
-    /* ボタンを限界までコンパクトに */
     .move-pad { max-width: 100%; gap: 2px; margin: 0; }
-    .move-pad .btn { 
-        height: 42px; /* さらに低く */
-        font-size: 0.85em; 
-    }
+    .move-pad .btn { height: 45px; font-size: 0.9em; }
     
-    .battle-pad, .spell-pad, #target-controls { gap: 2px; }
-    .battle-pad .btn, .spell-pad .btn { 
-        padding: 4px; font-size: 0.85em; height: 42px; 
-    }
+    .battle-pad, .spell-pad, #target-controls { gap: 3px; }
+    .battle-pad .btn, .spell-pad .btn { padding: 5px; font-size: 0.9em; height: 45px; }
     
-    #btn-return { margin-top: 2px; height: 30px; font-size: 0.75em; padding: 0; }
+    #btn-return { margin-top: 2px; height: 35px; font-size: 0.8em; }
 }
