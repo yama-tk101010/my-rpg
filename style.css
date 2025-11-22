@@ -565,3 +565,200 @@ h1, h2 {
     }
     .spell-pad .btn span { font-size: 1.2em; margin-right: 2px; }
 }
+/* =========================================
+   全体デザイン・リファイン (All UI Overhaul)
+   ========================================= */
+
+/* 1. 背景の統一 (全体にダークなパターンを適用) */
+body {
+    background-color: #050510;
+    background-image: 
+        linear-gradient(335deg, rgba(255,255,255,0.03) 23px, transparent 23px),
+        linear-gradient(155deg, rgba(255,255,255,0.03) 23px, transparent 23px),
+        linear-gradient(335deg, rgba(255,255,255,0.03) 23px, transparent 23px),
+        linear-gradient(155deg, rgba(255,255,255,0.03) 23px, transparent 23px);
+    background-size: 58px 58px;
+    background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+}
+
+/* 2. 共通ウィンドウ枠の高級化 (ガラスモーフィズム) */
+.screen-box {
+    background: rgba(20, 22, 30, 0.95); /* 濃い黒背景 */
+    border: 1px solid #555;
+    box-shadow: 
+        0 0 20px rgba(0,0,0,0.8), 
+        inset 0 0 60px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,255,255,0.1); /* 内側のハイライト */
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    color: #eee;
+}
+
+/* タイトル文字の装飾 */
+h2 {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-family: "Sawarabi Gothic", serif;
+    letter-spacing: 2px;
+}
+
+/* --- プロローグ画面 (タイトル画面) --- */
+#prologue-scene .screen-box {
+    background: transparent; /* 枠を消して背景を見せる */
+    border: none;
+    box-shadow: none;
+    animation: fadeIn 2s ease-in;
+}
+#prologue-scene h1 {
+    font-size: 3em;
+    text-shadow: 0 0 20px #ffd700, 0 0 40px #ff5500;
+    margin-bottom: 30px;
+    letter-spacing: 5px;
+}
+#prologue-scene .story-content {
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    margin-bottom: 30px !important;
+    line-height: 2;
+}
+#prologue-scene .btn {
+    height: 60px;
+    font-size: 1.2em;
+    background: linear-gradient(90deg, #622, #a44, #622);
+    border: 1px solid #f88;
+    box-shadow: 0 0 15px rgba(255,0,0,0.5);
+}
+
+/* --- ダンジョン画面のUI強化 --- */
+
+/* 3Dビュー枠 */
+#main-area {
+    border: 4px solid #2a2a2a; /* 太い枠 */
+    border-radius: 4px;
+    box-shadow: inset 0 0 20px #000;
+    position: relative;
+}
+/* 枠に金属っぽい質感を追加 */
+#main-area::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid rgba(255,255,255,0.2);
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* ダンジョン内ステータス (パネル風) */
+#status {
+    background: linear-gradient(180deg, #222, #111);
+    border: 1px solid #444;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    padding: 5px;
+}
+/* パーティメンバー行 */
+.ps-row {
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid #333;
+    padding: 4px 6px;
+    margin-bottom: 2px;
+    border-radius: 4px;
+}
+.job-badge-sm {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    background: #444;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 3px;
+    margin-right: 5px;
+    border: 1px solid #666;
+}
+
+/* ログ・メッセージエリア */
+#log {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #333;
+    border-left: 4px solid #555; /* 左にアクセント */
+}
+#battle-msg {
+    background: linear-gradient(90deg, rgba(0,0,50,0.8), rgba(0,50,100,0.9), rgba(0,0,50,0.8));
+    border: 1px solid #4af;
+    text-shadow: 0 0 5px #0ff;
+}
+
+/* コントローラーエリアの背景をなじませる */
+.controls {
+    background: rgba(10, 10, 15, 0.95); /* ほぼ不透明にしてボタンを見やすく */
+    border-top: 1px solid #333;
+}
+
+/* --- 各施設のテーマカラー設定 --- */
+
+/* 道具屋 (Shop) - 暖色系 */
+#shop-scene .screen-box {
+    border-color: #853;
+    box-shadow: 0 0 30px rgba(100, 50, 0, 0.5), inset 0 0 50px rgba(50, 20, 0, 0.5);
+}
+#shop-scene h2 { color: #fb8; border-bottom-color: #a64; }
+
+/* 神殿 (Temple) - 神秘的な青紫系 */
+#temple-scene .screen-box {
+    border-color: #44a;
+    box-shadow: 0 0 30px rgba(0, 50, 150, 0.5), inset 0 0 50px rgba(0, 10, 50, 0.5);
+}
+#temple-scene h2 { color: #aaf; text-shadow: 0 0 10px #00f; border-bottom-color: #44a; }
+
+/* キャンプ・メニュー (Camp) - ニュートラルグレー */
+#camp-overlay .screen-box, #sub-menu-overlay .screen-box {
+    border-color: #666;
+    max-width: 400px; /* 少し幅を狭めてメニューっぽく */
+}
+
+/* ステータス画面 (Status) - テクニカルな緑系 */
+#status-scene .screen-box {
+    border-color: #363;
+    box-shadow: 0 0 30px rgba(0, 50, 0, 0.5);
+}
+#status-scene h2 { color: #8f8; border-bottom-color: #262; }
+
+/* --- ボタンの高級化 --- */
+.btn {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5), 0 5px 10px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 0 #000;
+    transition: all 0.1s;
+}
+/* クリック時の沈み込み */
+.btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.5);
+}
+/* ボタン表面の光沢感 */
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+    pointer-events: none;
+}
+
+/* 閉じる・戻るボタンの統一スタイル */
+button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
+    background: linear-gradient(180deg, #333, #111);
+    border-color: #555;
+    color: #ccc;
+}
+
+/* フェードインアニメーション */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
