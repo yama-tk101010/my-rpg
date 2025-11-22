@@ -109,26 +109,40 @@
     </div>
 
     <div id="temple-scene" style="display: none;">
-        <div class="screen-box" style="border-color: #33ffff;">
+        <div class="screen-box" style="border-color: #33ffff; max-width: 600px;">
             <h2>🔮 転職の神殿</h2>
-            <p style="font-size:0.8em;">対象者を選択してください</p>
-            <div style="display:flex; justify-content:center; gap:5px; margin-bottom:10px;" id="temple-members"></div>
-            <hr>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <button class="btn" onclick="showJobChange()">転職する</button>
-                <button class="btn" onclick="checkLevelUp()">レベルアップ</button>
+            <p style="font-size:0.8em; color:#aaa;">魂を磨く者を選んでください</p>
+            
+            <div id="temple-member-list" class="temple-grid"></div>
+            
+            <hr style="border-color:#333; margin:10px 0;">
+
+            <div id="temple-action-area" style="display:none;">
+                <div class="temple-actions">
+                    <button class="btn temple-btn" onclick="checkLevelUp()">
+                        <div class="main">レベルアップ</div>
+                        <div class="sub" id="btn-lvl-sub">EXP確認</div>
+                    </button>
+                    <button class="btn temple-btn" onclick="showJobChange()">
+                        <div class="main">転職</div>
+                        <div class="sub">Lv1からやり直し</div>
+                    </button>
+                </div>
+
+                <div id="job-select-area" style="display:none; margin-top:10px;">
+                    <div class="grid-2col" id="job-buttons" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;"></div>
+                    <div id="job-desc" class="desc-box" style="margin:5px 0; border:1px dotted #555; padding:5px;"></div>
+                    <button class="btn btn-magic" onclick="executeClassChange()">✨ 決定</button>
+                </div>
+                
+                <div id="levelup-area" style="display:none; margin-top:10px;">
+                    <div id="levelup-stats"></div>
+                    <p>残りポイント: <span id="bonus-points" style="color:#ff3;">0</span></p>
+                    <button class="btn btn-magic" onclick="executeLevelUp()">💪 成長する</button>
+                </div>
             </div>
-            <div id="job-select-area" style="display:none; margin-top:10px;">
-                <div class="grid-2col" id="job-buttons" style="display:grid; grid-template-columns:1fr 1fr; gap:5px;"></div>
-                <div id="job-desc" class="desc-box" style="margin:5px 0; border:1px dotted #555; padding:5px;"></div>
-                <button class="btn btn-magic" onclick="executeClassChange()">✨ 決定</button>
-            </div>
-            <div id="levelup-area" style="display:none; margin-top:10px;">
-                <div id="levelup-stats"></div>
-                <p>残りポイント: <span id="bonus-points" style="color:#ff3;">0</span></p>
-                <button class="btn btn-magic" onclick="executeLevelUp()">💪 成長する</button>
-            </div>
-            <button class="btn" onclick="exitTemple()" style="margin-top:20px;">町へ戻る</button>
+
+            <button class="btn" onclick="exitTemple()" style="margin-top:15px; background:#333;">町へ戻る</button>
         </div>
     </div>
 
