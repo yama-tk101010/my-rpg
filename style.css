@@ -416,6 +416,9 @@ h1, h2 {
 /* =========================================
    スマホ・縦画面対応 (ボタンはみ出し修正版)
    ========================================= */
+/* =========================================
+   スマホ・縦画面対応 (ボタン完収まり修正版)
+   ========================================= */
 @media (max-width: 768px) {
     /* 1. 全体設定 */
     body {
@@ -434,15 +437,15 @@ h1, h2 {
         height: 100%;
         margin: 0;
         padding: 0;
-        gap: 0; /* 隙間をゼロにしてスペース確保 */
+        gap: 0;
         border: none;
         
         /* 行の高さ設定: 
-           [1] 3D画面 (25vhに縮小)
+           [1] 3D画面 (25vh -> 20vh に縮小して下部スペース確保)
            [2] 情報エリア (自動)
            [3] ログ (残り全て・最小0)
-           [4] 操作ボタン (自動・最優先) */
-        grid-template-rows: 25vh auto minmax(0, 1fr) auto;
+           [4] 操作ボタン (自動) */
+        grid-template-rows: 20vh auto minmax(0, 1fr) auto;
         
         grid-template-columns: 80px 1fr;
     }
@@ -490,9 +493,12 @@ h1, h2 {
         justify-content: space-between;
         margin-top: 2px;
     }
-    .ps-row { padding: 2px 4px; } /* 少し詰める */
+    /* ② HP位置調整: 右側にパディングを入れて端すぎないように */
+    .ps-row { 
+        padding: 2px 10px 2px 4px; 
+    }
 
-    /* 6. ログエリア (重なり防止 & スペース調整) */
+    /* 6. ログエリア */
     #log {
         grid-column: 1 / -1;
         width: 98%;
@@ -505,32 +511,31 @@ h1, h2 {
     }
     #battle-msg { margin: 0; padding: 2px; font-size: 0.9em; }
 
-    /* 7. コントローラー (はみ出し対策) */
+    /* 7. コントローラー (③ はみ出し徹底対策) */
     .controls {
         width: 100%;
-        /* 下の余白を 15px -> 5px に減らしてボタンを画面内に収める */
-        padding: 2px 2px 5px 2px;
+        padding: 2px 2px 5px 2px; /* 下部余白を最小限に */
         box-sizing: border-box;
         align-self: end;
-        gap: 4px;
-        background: #0a0a0f; /* 背景色をつけてログと分離 */
+        gap: 3px; /* ボタン間隔も詰める */
+        background: #0a0a0f;
         z-index: 20;
         border-top: 1px solid #333;
     }
     
-    /* ボタンサイズ調整 */
+    /* ボタンサイズをさらにコンパクトに */
     .btn { 
-        height: 46px; /* 少しだけ高さを抑える */
-        font-size: 0.95em; 
+        height: 42px; /* 46px -> 42px */
+        font-size: 0.9em; 
         margin: 0; 
     }
     
-    .move-pad { gap: 4px; margin-bottom: 0; }
+    .move-pad { gap: 3px; margin-bottom: 0; }
     
     /* 町へ戻るボタン */
     #btn-return {
-        height: 40px;
-        margin-top: 2px; /* マージン削減 */
+        height: 38px; /* さらに少し低く */
+        margin-top: 2px;
         background: linear-gradient(180deg, #550, #330);
         border-color: #cc0;
         color: #ffeb3b;
@@ -546,7 +551,8 @@ h1, h2 {
     }
     .town-menu-grid { gap: 8px; }
     .town-action-btn { height: 60px !important; }
-}/* =========================================
+}
+/* =========================================
    全体デザイン・リファイン (All UI Overhaul)
    ========================================= */
 

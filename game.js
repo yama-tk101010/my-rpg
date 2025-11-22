@@ -187,7 +187,7 @@ function updateDungeonUI() {
     document.getElementById('c-x').innerText=playerPos.x; document.getElementById('c-y').innerText=playerPos.y;
     document.getElementById('dungeon-party-status').innerHTML = party.map(p=>{
         let clr = p.hp < p.maxHp*0.3 ? '#ff5555' : '#fff'; if(!p.alive) clr = '#888';
-        return `<div class="ps-row"><div><span class="job-badge-sm">${jobData[p.jobId].name.charAt(0)}</span>${p.name}</div><div style="color:${clr}">HP:${p.hp}</div></div>`;
+        return `<div class="ps-row"><div><span class="job-badge-sm">${jobData[p.jobId].name.charAt(0)}</span><span style="font-size:0.9em; color:#aaa; margin-right:3px;">Lv.${p.level}</span>${p.name}</div><div style="color:${clr}">HP:${p.hp}</div></div>`;
     }).join('');
     checkObject();
 }
