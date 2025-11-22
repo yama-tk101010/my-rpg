@@ -22,22 +22,64 @@
     </div>
 
     <div id="town-scene" style="display: none;">
-        <div class="screen-box">
-            <h1>安全な町</h1>
-            <div style="text-align:right; color:#ffd700; font-weight:bold; margin-bottom:5px;">
-                💰 <span id="town-gold">0</span> G
+        <div class="town-bg-overlay"></div>
+
+        <div class="screen-box town-box">
+            <div class="town-header">
+                <div class="town-title">
+                    <span style="font-size:1.5em; margin-right:5px;">🏰</span>
+                    <div>
+                        <div style="font-size:0.6em; color:#aaa; letter-spacing:2px;">BASE CAMP</div>
+                        <div>始まりの町</div>
+                    </div>
+                </div>
+                <div class="town-gold-badge">
+                    <span style="font-size:0.8em; color:#aaa;">Funds</span><br>
+                    💰 <span id="town-gold" style="color:#ffd700; font-weight:bold;">0</span> G
+                </div>
             </div>
+
             <div id="town-status"></div>
+
+            <hr style="border-color:#444; margin: 15px 0;">
+
+            <div class="town-menu-grid">
+                <button class="btn menu-btn town-action-btn" onclick="townAction('inn')">
+                    <div class="btn-icon">🛏️</div>
+                    <div class="btn-text">
+                        <span class="main">宿屋</span>
+                        <span class="sub">HP回復</span>
+                    </div>
+                </button>
+                <button class="btn menu-btn town-action-btn" onclick="townAction('shop')">
+                    <div class="btn-icon">⚔️</div>
+                    <div class="btn-text">
+                        <span class="main">道具屋</span>
+                        <span class="sub">装備売買</span>
+                    </div>
+                </button>
+                <button class="btn menu-btn town-action-btn" onclick="townAction('temple')">
+                    <div class="btn-icon">🔮</div>
+                    <div class="btn-text">
+                        <span class="main">神殿</span>
+                        <span class="sub">転職・成長</span>
+                    </div>
+                </button>
+                <button class="btn menu-btn town-action-btn btn-go" onclick="townAction('outside')">
+                    <div class="btn-icon">🗺️</div>
+                    <div class="btn-text">
+                        <span class="main">外へ</span>
+                        <span class="sub">冒険に出る</span>
+                    </div>
+                </button>
+            </div>
+
+            <button class="btn menu-btn system-btn" onclick="openCamp('town')">
+                <span>⛺ メニュー (アイテム・装備)</span>
+            </button>
         </div>
         
-        <div class="menu-list" id="town-menu-list">
-            <button class="btn menu-btn" onclick="townAction('inn')">① 宿屋 (回復)</button>
-            <button class="btn menu-btn" onclick="townAction('shop')">② 道具屋 (売買)</button>
-            <button class="btn menu-btn" onclick="townAction('temple')">③ 神殿 (転職/LvUP)</button>
-            <button class="btn menu-btn btn-go" onclick="townAction('outside')">④ 外へ (探索)</button>
-            <button class="btn menu-btn" onclick="openCamp('town')">⛺ メニュー</button>
-        </div>
-        <div id="town-log" class="log-box" style="width:90%; max-width:600px;">
+        <div id="town-log" class="log-box town-log-style">
             <p>町に到着した。</p>
         </div>
     </div>
