@@ -104,13 +104,13 @@ function startGame() { document.getElementById('prologue-scene').style.display =
 function loadMap(f) {
     playerPos.floor = f;
     if(f===1) currentMapData=mapLevel1; else if(f===2) currentMapData=mapLevel2; else if(f===3) currentMapData=mapLevel3; else if(f===4) currentMapData=mapLevel4; else if(f===5) currentMapData=mapLevel5;
-    else if(f===10) currentMapData=mapForest; // zzzの森
+    else if(f===10) currentMapData=mapForest; // 迷いの森
     else if(f===20) currentMapData=mapCave;   // 海底洞窟
-    else if(f===30) currentMapData=mapTemple; // yyyの神殿
-    else if(f===40) currentMapData=mapTower;  // xxxの塔
+    else if(f===30) currentMapData=mapTemple; // 古代神殿
+    else if(f===40) currentMapData=mapTower;  // 天空の塔
     
     let name = `迷宮 B${f}F`;
-    if(f===10) name="zzzの森"; else if(f===20) name="海底洞窟"; else if(f===30) name="yyyの神殿"; else if(f===40) name="xxxの塔";
+    if(f===10) name="迷いの森"; else if(f===20) name="海底洞窟"; else if(f===30) name="古代神殿"; else if(f===40) name="天空の塔";
     document.getElementById('floor-display').innerText = name;
     checkObject();
 }
@@ -146,6 +146,10 @@ function closeWorldMap() {
 }
 function goToDungeon(floorId) {
     if (party.every(p => !p.alive)) { alert("全滅しています。宿屋へ。"); return; }
+    
+    // ★追加: ダンジョン突入時に、画面揺れのエフェクトが残っていたら消す
+    document.getElementById('main-area').classList.remove('shake-screen');
+
     closeWorldMap();
     document.getElementById('town-scene').style.display = 'none';
     document.getElementById('dungeon-scene').style.display = 'flex';
@@ -154,7 +158,7 @@ function goToDungeon(floorId) {
     if(cv) ctx = cv.getContext('2d');
 
     loadMap(floorId); 
-    // スタート位置 (各マップの入口へ)
+    
     if(floorId===1) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
     else if(floorId===10) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
     else if(floorId===20) { playerPos.x=1; playerPos.y=7; playerPos.dir=1; }

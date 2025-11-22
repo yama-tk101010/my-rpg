@@ -411,13 +411,7 @@ h1, h2 {
 }
 
 /* =========================================
-   スマホ・縦画面対応 (最終調整版)
-   ========================================= */
-/* =========================================
-   スマホ・縦画面対応 (ボタンはみ出し修正版)
-   ========================================= */
-/* =========================================
-   スマホ・縦画面対応 (ボタン完収まり修正版)
+   スマホ・縦画面対応 (HP位置調整 & ボタン修正版)
    ========================================= */
 @media (max-width: 768px) {
     /* 1. 全体設定 */
@@ -439,14 +433,7 @@ h1, h2 {
         padding: 0;
         gap: 0;
         border: none;
-        
-        /* 行の高さ設定: 
-           [1] 3D画面 (25vh -> 20vh に縮小して下部スペース確保)
-           [2] 情報エリア (自動)
-           [3] ログ (残り全て・最小0)
-           [4] 操作ボタン (自動) */
         grid-template-rows: 20vh auto minmax(0, 1fr) auto;
-        
         grid-template-columns: 80px 1fr;
     }
 
@@ -493,9 +480,9 @@ h1, h2 {
         justify-content: space-between;
         margin-top: 2px;
     }
-    /* ② HP位置調整: 右側にパディングを入れて端すぎないように */
+    /* ② HP位置調整: 右paddingを 25px に設定 */
     .ps-row { 
-        padding: 2px 10px 2px 4px; 
+        padding: 2px 25px 2px 4px; 
     }
 
     /* 6. ログエリア */
@@ -511,37 +498,28 @@ h1, h2 {
     }
     #battle-msg { margin: 0; padding: 2px; font-size: 0.9em; }
 
-    /* 7. コントローラー (③ はみ出し徹底対策) */
+    /* 7. コントローラー */
     .controls {
         width: 100%;
-        padding: 2px 2px 5px 2px; /* 下部余白を最小限に */
+        padding: 2px 2px 5px 2px;
         box-sizing: border-box;
         align-self: end;
-        gap: 3px; /* ボタン間隔も詰める */
+        gap: 3px;
         background: #0a0a0f;
         z-index: 20;
         border-top: 1px solid #333;
     }
-    
-    /* ボタンサイズをさらにコンパクトに */
-    .btn { 
-        height: 42px; /* 46px -> 42px */
-        font-size: 0.9em; 
-        margin: 0; 
-    }
-    
+    .btn { height: 42px; font-size: 0.9em; margin: 0; }
     .move-pad { gap: 3px; margin-bottom: 0; }
-    
-    /* 町へ戻るボタン */
     #btn-return {
-        height: 38px; /* さらに少し低く */
+        height: 38px;
         margin-top: 2px;
         background: linear-gradient(180deg, #550, #330);
         border-color: #cc0;
         color: #ffeb3b;
     }
 
-    /* --- その他画面の調整 --- */
+    /* その他 */
     .screen-box {
         width: 96%;
         padding: 10px;
