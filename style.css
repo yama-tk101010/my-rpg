@@ -749,3 +749,25 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* =========================================
+   Bug修正: 攻撃被弾時の画面揺れ定義
+   ========================================= */
+
+/* 画面全体を揺らす専用のアニメーションを定義 */
+@keyframes shake-screen-anim { 
+    0% { transform: translate(0, 0); } 
+    25% { transform: translate(-5px, 5px); } 
+    50% { transform: translate(0, 0); } 
+    75% { transform: translate(5px, -5px); } 
+    100% { transform: translate(0, 0); } 
+}
+
+/* .shake-screen クラスが適用された時は、上記のアニメーションを使う */
+.shake-screen { 
+    animation: shake-screen-anim 0.4s; 
+}
+
+/* 敵の画像はこれまで通り「中央寄せ(-50%)」を維持したまま揺らす */
+.shake-enemy { 
+    animation: shake 0.4s; 
+}
