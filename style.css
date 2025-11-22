@@ -322,34 +322,170 @@ h1, h2 {
     background: #131;
     transform: translateY(2px);
 }
-/* スマホ対応 */
-@media (max-width: 500px) {
-    body { padding: 0; margin: 0; height: 100svh; width: 100vw; overflow: hidden; justify-content: flex-start; }
-    #dungeon-scene h1 { display: none; }
-    #game-container {
-        display: grid; grid-template-columns: 90px 1fr; 
-        grid-template-areas: "view view" "map status" "msg msg" "log log" "ctrl ctrl";
-        grid-template-rows: 20vh auto auto auto 1fr;
-        gap: 2px; width: 100%; height: 100%; padding: 2px 0; border: none; border-radius: 0; box-sizing: border-box;
+/* =========================================
+   スマホ・縦画面対応 (レスポンシブ設定)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. 全体設定：余白をなくし、画面いっぱいに使う */
+    body {
+        padding: 0;
+        align-items: flex-start; /* 上寄せ配置 */
+        background: #000;
+        height: 100dvh; /* モバイルブラウザのアドレスバーを考慮した高さ */
+        overflow: hidden; /* 全体スクロールを禁止 */
     }
-    #main-area { grid-area: view; height: 100%; min-height: 100px; border-left: none; border-right: none; border-radius: 0; margin-bottom: 2px; }
-    #dungeon-canvas { height: 100%; width: auto; max-width: 100%; }
-    #enemy-img { width: 80px; height: 80px; }
-    #map-wrapper { grid-area: map; justify-self: center; width: 90px; }
-    #map-area { width: 80px; height: 80px; gap: 0; border: 1px solid #555; }
-    .cell { width: 8px !important; height: 8px !important; border: 0.5px solid #222; }
-    #floor-display { font-size: 0.6em; padding-bottom: 2px; border: none; }
-    #status { grid-area: status; font-size: 0.7em; padding: 2px 4px; flex-direction: row; justify-content: space-between; align-items: center; height: auto; border-right: none; border-radius: 0; }
-    
-    /* ★スマホでの左詰め調整 */
-    .party-status { flex: 1; }
-    .ps-row { justify-content: flex-start; gap: 5px; }
-    
-    #log { grid-area: log; height: 90px; min-height: 90px; max-height: 90px; font-size: 0.8em; margin: 0; background: #111; padding: 4px 8px; border-left: none; border-right: none; border-radius: 0; box-sizing: border-box; overflow-y: auto; }
-    #battle-msg { grid-area: msg; padding: 2px; font-size: 0.75em; margin-bottom: 0; border-radius: 0; border-left: none; border-right: none; }
-    .controls { grid-area: ctrl; padding: 0 2px 2px 2px; align-self: end; }
-    .move-pad { max-width: 100%; gap: 2px; margin: 0; }
-    .move-pad .btn { height: 45px; font-size: 0.85em; }
-    .battle-pad .btn, .spell-pad .btn { padding: 4px; font-size: 0.85em; height: 45px; }
-    #btn-return { margin-top: 2px; height: 30px; font-size: 0.75em; padding: 0; }
+
+    /* 2. コンテナ設定：縦方向の配置バランスを調整 */
+    #game-container {
+        width: 100%;
+        max-width: 100%;
+        height: 100%; /* 画面いっぱい */
+        margin: 0;
+        padding: 5px;
+        gap: 5px;
+        border: none;
+        
+        /* グリッド行の再定義: 
+           [1]3D画面 [2]情報 [3]ログ(残り全部) [4]ボタン */
+        grid-template-rows: auto auto 1fr auto;
+        /* グリッド列の再定義: ミニマップ幅を少し狭く */
+        grid-template-columns: 90px 1fr;
+    }
+
+    /* 3. メイン画面 (3Dビュー) */
+    #main-area {
+        height: 30vh;       /* 画面高さの30%を確保 */
+        min-height: 180px;  /* 最低限の高さ */
+        border-width: 2px;
+    }
+
+    /* 4. ミニマップエリア */
+    #map-wrapper {
+        width: 100%;
+        padding: 2px;
+    }
+    #map-area {
+        width: 80px;  /* スマホ用に少し縮小 */
+        height: 80px;
+    }
+    .cell { font-size: 4px; } /* マップ内の文字サイズ調整 */
+
+    /* 5. ステータスエリア */
+    #status {
+        padding: 4px 8px;
+        font-size: 0.75em; /* 文字を小さくして情報を収める */
+    }
+    .hero-icon-lg {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+        border-width: 1px;
+    }
+    .ps-row { padding: 1px 0; }
+    .status-right-col { min-width: auto; }
+
+    /* 6. ログ・メッセージエリア (余ったスペースを使う) */
+    #battle-msg {
+        margin-top: 2px;
+        padding: 4px;
+        font-size: 0.85em;
+    }
+    #log {
+        grid-column: 1 / -1; /* 横幅いっぱい */
+        margin-top: 0;
+        height: 100%;        /* 割り当てられたエリア(1fr)を埋める */
+        min-height: 0;       /* 縮小可能にする */
+        font-size: 0.8em;
+    }
+
+    /* 7. コントローラー (画面下部) */
+    .controls {
+        padding: 5px 0 15px 0; /* 下端に少し余裕を持たせる */
+        gap: 5px;
+        width: 100%;
+        align-self: end;
+    }
+    /* ボタンを指で押しやすい高さに */
+    .btn {
+        height: 52px;
+        font-size: 0.95em;
+        box-shadow: 0 3px 0 rgba(0,0,0,0.5); /* 立体感を出す */
+    }
+    .btn:active {
+        box-shadow: none;
+        transform: translateY(3px);
+    }
+
+    /* --- ①＆③ 画面ボックス（町・店・神殿など）のあふれ対策 --- */
+    .screen-box {
+        justify-content: flex-start; /* 上寄せにして、はみ出し防止 */
+        overflow-y: auto;            /* 内容が多い場合は縦スクロールさせる */
+        height: auto;                /* 高さをなりゆきに */
+        max-height: 90vh;            /* 画面内に収める */
+        padding: 10px;
+        padding-bottom: 40px;        /* 下部に指操作用の余裕を持たせる */
+    }
+    .menu-list {
+        margin: 10px auto;
+        gap: 8px;
+    }
+    .menu-btn {
+        height: 50px;
+        font-size: 1em;
+    }
+    /* リスト部分のスクロール許可 */
+    .scroll-list {
+        max-height: 50vh; 
+    }
+/* 町のステータスカードをスマホ用に超コンパクト化 */
+    #town-status {
+        display: grid;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+    #town-status .status-card {
+        padding: 5px;
+        margin: 0;
+        font-size: 0.8em;       /* 文字を小さく */
+        min-height: auto;       /* 高さを自動調整 */
+        display: flex;
+        align-items: center;
+    }
+    #town-status .hero-icon-lg {
+        width: 30px;            /* アイコンを小さく */
+        height: 30px;
+        margin-right: 8px;
+        border-width: 1px;
+    }
+    #town-status .status-info {
+        display: flex;          /* 横並びにして行数を減らす */
+        flex-wrap: wrap;        /* 入り切らない場合は折り返し */
+        gap: 8px;
+        align-items: baseline;
+    }
+    #town-status .status-info div {
+        margin: 0;
+    }
+    /* 町のログは場所を取るのでスマホでは小さく、あるいは非表示でも可 */
+    #town-log {
+        height: 60px;
+        font-size: 0.75em;
+        margin-top: 5px;
+    }
+
+    /* --- ② 戦闘中の呪文ボタン調整 --- */
+    .spell-pad .btn {
+        font-size: 0.75em;      /* ボタン文字サイズを縮小 */
+        padding: 0 2px;         /* 左右の余白を詰める */
+        height: 48px;           /* 高さを確保 */
+        white-space: nowrap;    /* 勝手な改行を防ぐ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* アイコンと文字の間隔調整 */
+    .spell-pad .btn span {
+        font-size: 1.2em;       /* アイコンだけ少し大きく */
+        margin-right: 2px;
+    }
 }
