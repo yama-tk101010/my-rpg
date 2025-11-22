@@ -1,5 +1,5 @@
 // ==========================================
-//  Yama RPG - New World Expansion (Ver 1.1 Base)
+//  Yama RPG - New World Expansion (Ver 1.6 UI Tweak)
 // ==========================================
 
 // --- 1. 定数・データ定義 ---
@@ -12,14 +12,12 @@ const VIEW_METRICS = [
 ];
 
 // --- マップデータ群 ---
-// 地下迷宮 (1-5F)
 const mapLevel1 = [[1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,1,5,0,1],[1,0,1,1,1,0,1,1,0,1],[1,0,1,2,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,1,1],[1,5,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,1,0,1],[1,9,1,1,1,1,0,0,0,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapLevel2 = [[1,1,1,1,1,1,1,1,1,1],[1,2,0,1,0,0,0,1,5,1],[1,0,0,1,0,1,0,1,0,1],[1,0,0,0,0,1,0,0,0,1],[1,1,1,1,0,1,1,1,0,1],[1,5,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,0,1],[1,0,0,0,1,0,0,0,0,1],[1,0,1,0,0,0,1,2,0,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapLevel3 = [[1,1,1,1,1,1,1,1,1,1],[1,2,0,0,0,0,0,1,0,1],[1,1,1,1,1,1,0,1,0,1],[1,4,0,0,0,0,0,0,0,1],[1,1,1,1,0,1,1,1,1,1],[1,0,0,0,0,0,0,5,0,1],[1,0,1,1,1,1,1,1,0,1],[1,0,1,5,0,0,0,0,0,1],[1,0,1,1,1,1,0,1,2,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapLevel4 = [[1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,1,2,1],[1,0,1,1,1,1,0,1,0,1],[1,0,1,5,0,1,0,0,0,1],[1,0,1,1,0,1,1,1,0,1],[1,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,0,1],[1,2,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapLevel5 = [[1,1,1,1,1,1,1,1,1,1],[1,3,0,0,0,0,0,0,5,1],[1,1,1,1,1,0,1,1,1,1],[1,0,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,1,0,1],[1,2,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]];
 
-// 新規追加マップ (10:森, 20:海, 30:神殿, 40:塔)
 const mapForest = [[1,1,1,1,1,1,1,1,1,1],[1,5,0,1,0,0,0,0,0,1],[1,1,0,1,0,1,1,1,0,1],[1,0,0,0,0,0,0,1,0,1],[1,0,1,1,1,1,0,1,0,1],[1,0,0,0,0,1,0,0,0,1],[1,1,1,0,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,1],[1,9,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapCave = [[1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,1,5,1],[1,0,1,1,1,1,0,1,0,1],[1,0,1,0,0,0,0,0,0,1],[1,0,1,0,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,0,1,1,0,1],[1,9,0,0,0,0,1,5,0,1],[1,1,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]];
 const mapTemple = [[1,1,1,1,1,1,1,1,1,1],[1,5,0,0,0,1,0,0,0,1],[1,1,1,1,0,1,0,1,0,1],[1,0,0,0,0,0,0,1,0,1],[1,0,1,1,1,1,0,1,0,1],[1,0,1,5,0,0,0,1,0,1],[1,0,1,1,1,1,1,1,0,1],[1,0,0,0,0,0,0,0,0,1],[1,9,1,1,1,1,1,1,1,1],[1,1,1,1,1,1,1,1,1,1]];
@@ -28,61 +26,30 @@ const mapTower = [[1,1,1,1,1,1,1,1,1,1],[1,0,0,1,0,0,0,1,5,1],[1,0,0,1,0,1,0,1,0
 // 宝箱
 const chestData = { 
     "1_1_5":"w01", "1_7_1":"i01", "2_1_5":"a02", "2_8_1":"h01", "3_3_7":"i01", "3_7_5":"s02", "4_3_3":"i04", "5_8_1":"ac02",
-    "10_1_1":"i02", // 森
-    "20_8_7":"ac01", // 海
-    "30_1_1":"w03", "30_3_5":"i03", // 神殿
-    "40_8_1":"h02" // 塔
+    "10_1_1":"i02", "20_8_7":"ac01", "30_1_1":"w03", "30_3_5":"i03", "40_8_1":"h02"
 };
 
-// テーマ (壁色等)
+// テーマ
 const dungeonThemes = {
     1: { ceil: "#1a1a1a", floor: "#3d342b", wallBaseRGB: [107, 91, 69], wallStroke: "#111" },
     2: { ceil: "#1a1a1a", floor: "#3d342b", wallBaseRGB: [107, 91, 69], wallStroke: "#111" },
     3: { ceil: "#222", floor: "#333", wallBaseRGB: [80, 80, 80], wallStroke: "#000" },
     4: { ceil: "#222", floor: "#333", wallBaseRGB: [80, 80, 80], wallStroke: "#000" },
     5: { ceil: "#2a0000", floor: "#1a051a", wallBaseRGB: [80, 30, 50], wallStroke: "#300" },
-    // 新マップテーマ
-    10: { ceil: "#001100", floor: "#002200", wallBaseRGB: [34, 139, 34], wallStroke: "#002200" }, // 森: 緑
-    20: { ceil: "#000033", floor: "#000055", wallBaseRGB: [0, 100, 200], wallStroke: "#000033" }, // 海: 青
-    30: { ceil: "#222", floor: "#444", wallBaseRGB: [200, 200, 150], wallStroke: "#554400" }, // 神殿: 白/金
-    40: { ceil: "#001133", floor: "#111", wallBaseRGB: [100, 100, 120], wallStroke: "#000" } // 塔: 灰青
+    10: { ceil: "#001100", floor: "#002200", wallBaseRGB: [34, 139, 34], wallStroke: "#002200" },
+    20: { ceil: "#000033", floor: "#000055", wallBaseRGB: [0, 100, 200], wallStroke: "#000033" },
+    30: { ceil: "#222", floor: "#444", wallBaseRGB: [200, 200, 150], wallStroke: "#554400" },
+    40: { ceil: "#001133", floor: "#111", wallBaseRGB: [100, 100, 120], wallStroke: "#000" }
 };
 
 const spellNames = { flame: "フレイム", heal: "ヒール", double: "二段切り", escape: "エスケープ" };
 const jobData = {
-    hero: { 
-        name: "勇者", 
-        icon: "👑",
-        baseStats: { str:10, int:8, pie:8, vit:8, agi:8, luc:9 }, 
-        spells: { double:1, flame:1, heal:1, escape:0 }, 
-        canEquip: ['sword','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], 
-        desc:"攻守のバランスが良く、簡単な回復や攻撃魔法も扱える万能職。迷ったらこれ。" 
-    },
-    warrior: { 
-        name: "戦士", 
-        icon: "⚔️",
-        baseStats: { str:12, int:6, pie:6, vit:10, agi:7, luc:7 }, 
-        spells: { double:3, flame:0, heal:0, escape:0 }, 
-        canEquip: ['sword','axe','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], 
-        desc:"圧倒的な体力と腕力で敵を粉砕する前衛の要。魔法は使えないが、重装備が可能。" 
-    },
-    mage: { 
-        name: "魔法使い", 
-        icon: "🪄",
-        baseStats: { str:6, int:12, pie:7, vit:6, agi:9, luc:8 }, 
-        spells: { double:0, flame:5, heal:0, escape:1 }, 
-        canEquip: ['staff','clothes','hat','gloves','lightShield','acc'], 
-        desc:"強力な攻撃呪文を操るアタッカー。HPと防御力は低いが、殲滅力は随一。" 
-    },
-    priest: { 
-        name: "僧侶", 
-        icon: "✝️",
-        baseStats: { str:7, int:8, pie:12, vit:7, agi:7, luc:8 }, 
-        spells: { double:0, flame:0, heal:5, escape:0 }, 
-        canEquip: ['mace','staff','lightShield','clothes','hat','gloves','acc'], 
-        desc:"回復と守りのスペシャリスト。パーティの生存率を上げるためには欠かせない存在。" 
-    }
-};const itemData = {
+    hero: { name: "勇者", icon: "👑", baseStats: { str:10, int:8, pie:8, vit:8, agi:8, luc:9 }, spells: { double:1, flame:1, heal:1, escape:0 }, canEquip: ['sword','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], desc:"バランス型" },
+    warrior: { name: "戦士", icon: "⚔️", baseStats: { str:12, int:6, pie:6, vit:10, agi:7, luc:7 }, spells: { double:3, flame:0, heal:0, escape:0 }, canEquip: ['sword','axe','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], desc:"高火力・高耐久" },
+    mage: { name: "魔法使い", icon: "🪄", baseStats: { str:6, int:12, pie:7, vit:6, agi:9, luc:8 }, spells: { double:0, flame:5, heal:0, escape:1 }, canEquip: ['staff','clothes','hat','gloves','lightShield','acc'], desc:"攻撃魔法" },
+    priest: { name: "僧侶", icon: "✝️", baseStats: { str:7, int:8, pie:12, vit:7, agi:7, luc:8 }, spells: { double:0, flame:0, heal:5, escape:0 }, canEquip: ['mace','staff','lightShield','clothes','hat','gloves','acc'], desc:"回復魔法" }
+};
+const itemData = {
     w01:{name:"ショートソード",type:"weapon",subType:"sword",power:4,price:100}, w02:{name:"ロングソード",type:"weapon",subType:"sword",power:8,price:250}, w03:{name:"手斧",type:"weapon",subType:"axe",power:6,price:120}, w04:{name:"バトルアックス",type:"weapon",subType:"axe",power:10,price:300}, w05:{name:"メイス",type:"weapon",subType:"mace",power:5,price:150}, w06:{name:"木の杖",type:"weapon",subType:"staff",power:2,price:50},
     a01:{name:"布の服",type:"armor",subType:"clothes",ac:1,price:50}, a02:{name:"皮の鎧",type:"armor",subType:"armor",ac:3,price:200}, a03:{name:"鎖カタビラ",type:"armor",subType:"armor",ac:5,price:500},
     s01:{name:"バックラー",type:"shield",subType:"lightShield",ac:2,price:80}, s02:{name:"カイトシールド",type:"shield",subType:"heavyShield",ac:4,price:250},
@@ -100,9 +67,10 @@ let party = [
 let partyInventory = [], partyGold = 100, openedChests = [];
 let playerPos = { x: 1, y: 8, dir: 0, floor: 1 };
 let currentMapData = mapLevel1;
-let visitedMaps = { 1:[], 2:[], 3:[], 4:[], 5:[], 10:[], 20:[], 30:[], 40:[] }; // 追加マップ用初期化
+let visitedMaps = { 1:[], 2:[], 3:[], 4:[], 5:[], 10:[], 20:[], 30:[], 40:[] };
 for(let f in visitedMaps) visitedMaps[f] = Array(mapSize).fill().map(()=>Array(mapSize).fill(false));
-let enemy = { name: "", hp: 0, maxHp: 0, isBoss: false, isCharging: false, exp: 0, gold: 0 };
+
+let enemies = []; 
 let isBattle = false, activeMemberIndex = 0, actionQueue = [], ctx = null, battleSpellMode = 'spell', menuReturnTo = 'town', templeTargetIndex = -1, selectedJobId = "", bonusPoints = 0, tempStatAlloc = {}; 
 
 // --- 初期化 ---
@@ -131,10 +99,10 @@ function startGame() { document.getElementById('prologue-scene').style.display =
 function loadMap(f) {
     playerPos.floor = f;
     if(f===1) currentMapData=mapLevel1; else if(f===2) currentMapData=mapLevel2; else if(f===3) currentMapData=mapLevel3; else if(f===4) currentMapData=mapLevel4; else if(f===5) currentMapData=mapLevel5;
-    else if(f===10) currentMapData=mapForest; // 迷いの森
-    else if(f===20) currentMapData=mapCave;   // 海底洞窟
-    else if(f===30) currentMapData=mapTemple; // 古代神殿
-    else if(f===40) currentMapData=mapTower;  // 天空の塔
+    else if(f===10) currentMapData=mapForest;
+    else if(f===20) currentMapData=mapCave;
+    else if(f===30) currentMapData=mapTemple;
+    else if(f===40) currentMapData=mapTower;
     
     let name = `迷宮 B${f}F`;
     if(f===10) name="迷いの森"; else if(f===20) name="海底洞窟"; else if(f===30) name="古代神殿"; else if(f===40) name="天空の塔";
@@ -159,39 +127,22 @@ function townAction(act) {
         updateTownStatus(); townLog("宿に泊まった。");
     } else if (act === 'shop') openShop(); 
     else if (act === 'temple') openTemple(); 
-    else if (act === 'outside') openWorldMap(); // ★変更: 外へ出る
+    else if (act === 'outside') openWorldMap();
 }
 
-// ★ワールドマップ機能
-function openWorldMap() {
-    document.getElementById('town-scene').style.display = 'none';
-    document.getElementById('world-map-scene').style.display = 'flex';
-}
-function closeWorldMap() {
-    document.getElementById('world-map-scene').style.display = 'none';
-    document.getElementById('town-scene').style.display = 'block';
-}
+function openWorldMap() { document.getElementById('town-scene').style.display = 'none'; document.getElementById('world-map-scene').style.display = 'flex'; }
+function closeWorldMap() { document.getElementById('world-map-scene').style.display = 'none'; document.getElementById('town-scene').style.display = 'block'; }
 function goToDungeon(floorId) {
     if (party.every(p => !p.alive)) { alert("全滅しています。宿屋へ。"); return; }
-    
-    // ★追加: ダンジョン突入時に、画面揺れのエフェクトが残っていたら消す
     document.getElementById('main-area').classList.remove('shake-screen');
-
     closeWorldMap();
     document.getElementById('town-scene').style.display = 'none';
     document.getElementById('dungeon-scene').style.display = 'flex';
-    
     const cv = document.getElementById('dungeon-canvas');
     if(cv) ctx = cv.getContext('2d');
-
     loadMap(floorId); 
-    
-    if(floorId===1) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
-    else if(floorId===10) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
+    if(floorId===1 || floorId===10 || floorId===30 || floorId===40) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
     else if(floorId===20) { playerPos.x=1; playerPos.y=7; playerPos.dir=1; }
-    else if(floorId===30) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
-    else if(floorId===40) { playerPos.x=1; playerPos.y=8; playerPos.dir=0; }
-    
     checkObject(); updatePlayerVision(); updateDungeonUI(); toggleControls('move');
     townLog("ダンジョンへ入った...");
 }
@@ -219,14 +170,10 @@ function updateDungeonUI() {
     document.getElementById('dungeon-party-status').innerHTML = party.map(p=>{
         let clr = p.hp < p.maxHp*0.3 ? '#ff5555' : '#fff'; 
         if(!p.alive) clr = '#888';
-        
-        // ★追加: 状態異常アイコンの判定
         let statusIcon = "";
         if(!p.alive) statusIcon = "🪦";
         else if(p.status === 'poison') statusIcon = "<span style='color:#d0d;'>☠️</span>";
         else if(p.status === 'paralyze') statusIcon = "<span style='color:#dd0;'>⚡</span>";
-        
-        // 名前行に statusIcon を追加
         return `<div class="ps-row"><div><span class="job-badge-sm">${jobData[p.jobId].name.charAt(0)}</span><span style="font-size:0.9em; color:#aaa; margin-right:3px;">Lv.${p.level}</span>${p.name} ${statusIcon}</div><div style="color:${clr}">HP:${p.hp}</div></div>`;
     }).join('');
     checkObject();
@@ -257,67 +204,25 @@ function drawLayer(d, theme){
         drawIcon(ctx, ix, iy, s, t);
     }
 }
-// game.js の drawIcon 関数
-
 function drawIcon(ctx, x, y, size, type) {
-    // ★追加: 全体のサイズ感を調整 (0.8倍にして、位置を中心に寄せる)
     const scale = 0.8; 
     const offset = (size * (1 - scale)) / 2;
-    x += offset;
-    y += offset;
-    size *= scale;
-
+    x += offset; y += offset; size *= scale;
     ctx.save();
-    
     if(type === 'ladder') {
         ctx.strokeStyle = '#8B4513'; ctx.lineWidth = Math.max(1, size/15); ctx.beginPath();
         ctx.moveTo(x + size*0.25, y); ctx.lineTo(x + size*0.25, y + size); ctx.moveTo(x + size*0.75, y); ctx.lineTo(x + size*0.75, y + size);
         for(let i=1; i<=5; i++) { const ry = y + (size * i / 6); ctx.moveTo(x + size*0.25, ry); ctx.lineTo(x + size*0.75, ry); } ctx.stroke();
-        
     } else if(type === 'chest') {
-        const boxH = size * 0.5;
-        const lidH = size * 0.3;
-        const baseY = y + (size - boxH) / 2 + lidH / 3;
-
-        // 箱本体
-        ctx.fillStyle = '#8B4513';
-        ctx.fillRect(x, baseY, size, boxH);
-        
-        // 蓋 (アーチ)
-        ctx.fillStyle = '#A0522D';
-        ctx.beginPath();
-        ctx.moveTo(x, baseY);
-        ctx.quadraticCurveTo(x + size/2, baseY - lidH * 1.8, x + size, baseY);
-        ctx.fill();
-        
-        // 枠線・装飾
-        ctx.strokeStyle = '#DAA520';
-        ctx.lineWidth = Math.max(2, size / 12);
-        ctx.lineJoin = 'round';
-        
-        // 蓋の縁
-        ctx.beginPath();
-        ctx.moveTo(x, baseY);
-        ctx.quadraticCurveTo(x + size/2, baseY - lidH * 1.8, x + size, baseY);
-        ctx.stroke();
-        
-        // 箱の枠
+        const boxH = size * 0.5; const lidH = size * 0.3; const baseY = y + (size - boxH) / 2 + lidH / 3;
+        ctx.fillStyle = '#8B4513'; ctx.fillRect(x, baseY, size, boxH);
+        ctx.fillStyle = '#A0522D'; ctx.beginPath(); ctx.moveTo(x, baseY); ctx.quadraticCurveTo(x + size/2, baseY - lidH * 1.8, x + size, baseY); ctx.fill();
+        ctx.strokeStyle = '#DAA520'; ctx.lineWidth = Math.max(2, size / 12); ctx.lineJoin = 'round';
+        ctx.beginPath(); ctx.moveTo(x, baseY); ctx.quadraticCurveTo(x + size/2, baseY - lidH * 1.8, x + size, baseY); ctx.stroke();
         ctx.strokeRect(x, baseY, size, boxH);
-        
-        // ベルト
-        ctx.beginPath();
-        ctx.moveTo(x + size/2, baseY - lidH * 0.8);
-        ctx.lineTo(x + size/2, baseY + boxH);
-        ctx.stroke();
-        
-        // 鍵穴
-        ctx.fillStyle = '#000';
-        ctx.beginPath();
-        ctx.arc(x + size/2, baseY + boxH * 0.25, size * 0.08, 0, Math.PI*2);
-        ctx.fill();
-
+        ctx.beginPath(); ctx.moveTo(x + size/2, baseY - lidH * 0.8); ctx.lineTo(x + size/2, baseY + boxH); ctx.stroke();
+        ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(x + size/2, baseY + boxH * 0.25, size * 0.08, 0, Math.PI*2); ctx.fill();
     } else {
-        // その他 (敵、イベント等)
         const color = type === 'boss' ? '255,50,50' : '50,100,255';
         const grad = ctx.createRadialGradient(x+size/2, y+size/2, size/10, x+size/2, y+size/2, size/1.8);
         grad.addColorStop(0, `rgba(${color}, 0.8)`); grad.addColorStop(1, `rgba(${color}, 0)`);
@@ -348,340 +253,457 @@ function openStatusMenu() { document.getElementById('camp-overlay').style.displa
 function closeStatusMenu() { document.getElementById('status-scene').style.display = 'none'; document.getElementById('camp-overlay').style.display = 'flex'; }
 function openShop() { document.getElementById('town-scene').style.display='none'; document.getElementById('shop-scene').style.display='block'; updateShopUI(); }
 function exitShop() { document.getElementById('shop-scene').style.display='none'; document.getElementById('town-scene').style.display='block'; updateTownStatus(); }
-function updateShopUI() { 
-    document.getElementById('shop-gold').innerText = partyGold; 
-    const list = document.getElementById('shop-list'); 
-    list.innerHTML = ''; 
-    
-    for (let id in itemData) { 
-        const item = itemData[id]; 
-        let stats = ""; 
-        // 装備品の場合、性能と装備可能職を表示
-        if(item.type !== 'consumable'){ 
-            if(item.power) stats += `攻+${item.power} `; 
-            if(item.ac) stats += `防+${item.ac} `; 
-            stats += getEquipJobString(item.subType); 
-        } 
-        // アイテムの場合、効果説明を表示
-        if(item.effect) stats += `効果:${item.desc} `; 
-        
-        const div = document.createElement('div'); 
-        div.className = 'shop-item'; 
-        
-        // レイアウト用HTML構造に変更
-        div.innerHTML = `
-            <div class="shop-info">
-                <div class="shop-row">
-                    <span class="shop-name">${item.name}</span>
-                    <span class="shop-price">${item.price}G</span>
-                </div>
-                <div class="shop-desc">${stats}</div>
-            </div> 
-            <button class="btn shop-btn" onclick="buyItem('${id}')">購入</button>
-        `; 
-        list.appendChild(div); 
-    } 
-}
+function updateShopUI() { document.getElementById('shop-gold').innerText = partyGold; const list = document.getElementById('shop-list'); list.innerHTML = ''; for (let id in itemData) { const item = itemData[id]; let stats = ""; if(item.type !== 'consumable'){ if(item.power) stats += `攻+${item.power} `; if(item.ac) stats += `防+${item.ac} `; stats += getEquipJobString(item.subType); } if(item.effect) stats += `効果:${item.desc} `; const div = document.createElement('div'); div.className = 'shop-item'; div.innerHTML = `<div class="shop-info"><div class="shop-row"><span class="shop-name">${item.name}</span><span class="shop-price">${item.price}G</span></div><div class="shop-desc">${stats}</div></div> <button class="btn shop-btn" onclick="buyItem('${id}')">購入</button>`; list.appendChild(div); } }
 function buyItem(id) { const item = itemData[id]; if (partyGold >= item.price) { partyGold -= item.price; partyInventory.push(id); alert(`${item.name}を購入しました。`); updateShopUI(); } else alert("お金が足りません。"); }
-function openTemple() { 
-    document.getElementById('town-scene').style.display='none'; 
-    document.getElementById('temple-scene').style.display='block'; 
-    
-    // 選択状態をリセット
-    templeTargetIndex = -1;
-    document.getElementById('temple-action-area').style.display = 'none';
-    document.getElementById('job-select-area').style.display='none'; 
-    document.getElementById('levelup-area').style.display='none'; 
-
-    // キャラクターリスト（カード）の生成
-    const list = document.getElementById('temple-member-list');
-    list.innerHTML = party.map((p,i) => {
-        const canLvl = p.exp >= p.level * 100;
-        const lvlBadges = canLvl ? `<span class="lvl-up-badge">UP!</span>` : "";
-        const selectedClass = (i === templeTargetIndex) ? "selected" : "";
-        
-        return `
-        <div class="temple-card ${selectedClass}" onclick="selectTempleMember(${i})">
-            <img src="${p.img}" class="temple-icon">
-            <div class="temple-card-info">
-                <div class="temple-name">${p.name}</div>
-                <div class="temple-meta">Lv.${p.level} ${jobData[p.jobId].name}</div>
-            </div>
-            ${lvlBadges}
-        </div>`;
-    }).join('');
-}
-
-function selectTempleMember(idx) { 
-    templeTargetIndex = idx; 
-    
-    // UI更新（選択状態の再描画）
-    openTemple(); // リスト再描画（手抜きですが確実です）
-    
-    // 選択されたカードにスタイル適用
-    const cards = document.getElementsByClassName('temple-card');
-    if(cards[idx]) cards[idx].classList.add('selected-card');
-
-    // アクションエリアを表示
-    document.getElementById('temple-action-area').style.display = 'block';
-    
-    // レベルアップボタンのテキスト更新
-    const p = party[idx];
-    const req = p.level * 100;
-    const btnText = document.getElementById('btn-lvl-sub');
-    if(p.exp >= req) {
-        btnText.innerText = "可能！";
-        btnText.style.color = "#ff0";
-    } else {
-        btnText.innerText = `あと ${req - p.exp}`;
-        btnText.style.color = "#888";
-    }
-}
-
-function exitTemple() { 
-    document.getElementById('temple-scene').style.display='none'; 
-    document.getElementById('town-scene').style.display='block'; 
-    updateTownStatus(); 
-}
-
-function showJobChange() { 
-    document.getElementById('job-select-area').style.display='block'; 
-    document.getElementById('levelup-area').style.display='none'; 
-    
-    // ジョブ選択ボタンの生成 (アイコン付き)
-    const jobs = ['hero','warrior','mage','priest']; 
-    document.getElementById('job-buttons').innerHTML = jobs.map(j => {
-        const d = jobData[j];
-        // 現在のジョブならアクティブ表示にするなどのクラス付与も可能
-        return `<button class="btn job-card-btn" id="btn-job-${j}" onclick="selectJob('${j}')">
-            <div style="font-size:2em;">${d.icon}</div>
-            <div>${d.name}</div>
-        </button>`;
-    }).join(''); 
-    
-    document.getElementById('job-desc').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>職業アイコンをタップして<br>詳細を確認してください</div>";
-    selectedJobId = null;
-}
-
-function selectJob(jid) { 
-    selectedJobId = jid; 
-    const d = jobData[jid];
-    
-    // ボタンの選択状態（ハイライト）を更新
-    const btns = document.querySelectorAll('.job-card-btn');
-    btns.forEach(b => b.classList.remove('active-job'));
-    document.getElementById(`btn-job-${jid}`).classList.add('active-job');
-
-    // 装備可能リストの生成
-    const equipTypes = {
-        sword:"剣", axe:"斧", mace:"鈍器", staff:"杖", 
-        heavyShield:"大盾", lightShield:"小盾", 
-        armor:"鎧", clothes:"服", helm:"兜", hat:"帽子"
-    };
-    const equips = d.canEquip.map(e => equipTypes[e]).filter(v=>v).join('・');
-
-    // 習得呪文リストの生成
-    let spells = [];
-    if(d.spells.flame) spells.push("🔥攻撃魔法");
-    if(d.spells.heal) spells.push("💚回復魔法");
-    if(d.spells.double) spells.push("⚔️剣技");
-    if(d.spells.escape) spells.push("💨脱出");
-    const spellStr = spells.length > 0 ? spells.join(' / ') : "なし";
-
-    // 詳細情報のHTML生成
-    const html = `
-        <div class="job-info-panel">
-            <h3 style="margin:0 0 10px 0; color:#ffd700; border-bottom:1px solid #555; padding-bottom:5px;">
-                ${d.icon} ${d.name}
-            </h3>
-            <p style="font-size:0.9em; line-height:1.4; margin-bottom:10px;">${d.desc}</p>
-            
-            <div class="job-detail-grid">
-                <div class="detail-box">
-                    <div class="detail-label">基礎ステータス</div>
-                    <div class="stat-bar-row"><span>腕力:</span> <span class="stat-val">${d.baseStats.str}</span></div>
-                    <div class="stat-bar-row"><span>知力:</span> <span class="stat-val">${d.baseStats.int}</span></div>
-                    <div class="stat-bar-row"><span>信仰:</span> <span class="stat-val">${d.baseStats.pie}</span></div>
-                    <div class="stat-bar-row"><span>体力:</span> <span class="stat-val">${d.baseStats.vit}</span></div>
-                </div>
-                <div class="detail-box">
-                    <div class="detail-label">特徴</div>
-                    <div style="font-size:0.8em; text-align:left;">
-                        <div style="margin-bottom:4px;">🛠️ <b>装備:</b> ${equips}</div>
-                        <div>✨ <b>習得:</b> ${spellStr}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.getElementById('job-desc').innerHTML = html; 
-}
-
-function executeClassChange() { 
-    if(!selectedJobId) return; 
-    const p = party[templeTargetIndex]; 
-    if(p.jobId === selectedJobId) return alert("すでにその職業です");
-    
-    if(!confirm("レベルが1に戻りますがよろしいですか？")) return;
-
-    p.jobId = selectedJobId; p.level = 1; p.exp = 0; 
-    initCharacter(p); calculateStats(p); p.hp = p.maxHp; 
-    alert("転職しました！"); 
-    selectTempleMember(templeTargetIndex); // 更新
-}
-
-function checkLevelUp() { 
-    const p = party[templeTargetIndex]; 
-    const req = p.level * 100; 
-    if (p.exp >= req) { 
-        bonusPoints = 3; // ボーナスポイントを少し増やすなど調整可
-        tempStatAlloc={str:0,int:0,pie:0,vit:0,agi:0,luc:0}; 
-        document.getElementById('job-select-area').style.display='none'; 
-        document.getElementById('levelup-area').style.display='block'; 
-        renderLevelUpStats(); updateBonusUI(); 
-    } else {
-        alert(`経験値が足りません (あと ${req - p.exp})`);
-    }
-}
-
-// executeLevelUp, renderLevelUpStats, addStat, updateBonusUI は変更なしでOKですが、
-// executeLevelUp の最後に画面更新を入れるため、ここだけ修正します。
-function executeLevelUp() { 
-    if(bonusPoints > 0) return alert("ポイントを使い切ってください"); 
-    const p = party[templeTargetIndex]; 
-    const req = p.level * 100; 
-    p.level++; p.exp -= req; 
-    for(let k in tempStatAlloc) p.stats[k]+=tempStatAlloc[k]; 
-    p.maxHp += Math.floor(p.stats.vit/2); 
-    for(let k in p.spells) { if(p.spells[k].max > 0) p.spells[k].max += 1; } 
-    calculateStats(p); p.hp = p.maxHp; // 回復させるサービス
-    alert("レベルアップしました！"); 
-    
-    document.getElementById('levelup-area').style.display='none';
-    selectTempleMember(templeTargetIndex); 
-}
-
-// --- Action/Move/Check ---
+function openTemple() { document.getElementById('town-scene').style.display='none'; document.getElementById('temple-scene').style.display='block'; templeTargetIndex = -1; document.getElementById('temple-action-area').style.display = 'none'; document.getElementById('job-select-area').style.display='none'; document.getElementById('levelup-area').style.display='none'; const list = document.getElementById('temple-member-list'); list.innerHTML = party.map((p,i) => { const canLvl = p.exp >= p.level * 100; const lvlBadges = canLvl ? `<span class="lvl-up-badge">UP!</span>` : ""; const selectedClass = (i === templeTargetIndex) ? "selected" : ""; return `<div class="temple-card ${selectedClass}" onclick="selectTempleMember(${i})"><img src="${p.img}" class="temple-icon"><div class="temple-card-info"><div class="temple-name">${p.name}</div><div class="temple-meta">Lv.${p.level} ${jobData[p.jobId].name}</div></div>${lvlBadges}</div>`; }).join(''); }
+function selectTempleMember(idx) { openTemple(); templeTargetIndex = idx; const cards = document.getElementsByClassName('temple-card'); if(cards[idx]) cards[idx].classList.add('selected-card'); document.getElementById('temple-action-area').style.display = 'block'; const p = party[idx]; const req = p.level * 100; const btnText = document.getElementById('btn-lvl-sub'); if(p.exp >= req) { btnText.innerText = "可能！"; btnText.style.color = "#ff0"; } else { btnText.innerText = `あと ${req - p.exp}`; btnText.style.color = "#888"; } }
+function exitTemple() { document.getElementById('temple-scene').style.display='none'; document.getElementById('town-scene').style.display='block'; updateTownStatus(); }
+function showJobChange() { document.getElementById('job-select-area').style.display='block'; document.getElementById('levelup-area').style.display='none'; const jobs = ['hero','warrior','mage','priest']; document.getElementById('job-buttons').innerHTML = jobs.map(j => { const d = jobData[j]; return `<button class="btn job-card-btn" id="btn-job-${j}" onclick="selectJob('${j}')"><div style="font-size:2em;">${d.icon}</div><div>${d.name}</div></button>`; }).join(''); document.getElementById('job-desc').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>職業アイコンをタップして<br>詳細を確認してください</div>"; selectedJobId = null; }
+function selectJob(jid) { selectedJobId = jid; const d = jobData[jid]; const btns = document.querySelectorAll('.job-card-btn'); btns.forEach(b => b.classList.remove('active-job')); document.getElementById(`btn-job-${jid}`).classList.add('active-job'); const equipTypes = { sword:"剣", axe:"斧", mace:"鈍器", staff:"杖", heavyShield:"大盾", lightShield:"小盾", armor:"鎧", clothes:"服", helm:"兜", hat:"帽子" }; const equips = d.canEquip.map(e => equipTypes[e]).filter(v=>v).join('・'); let spells = []; if(d.spells.flame) spells.push("🔥攻撃魔法"); if(d.spells.heal) spells.push("💚回復魔法"); if(d.spells.double) spells.push("⚔️剣技"); if(d.spells.escape) spells.push("💨脱出"); const spellStr = spells.length > 0 ? spells.join(' / ') : "なし"; const html = `<div class="job-info-panel"><h3 style="margin:0 0 10px 0; color:#ffd700; border-bottom:1px solid #555; padding-bottom:5px;">${d.icon} ${d.name}</h3><p style="font-size:0.9em; line-height:1.4; margin-bottom:10px;">${d.desc}</p><div class="job-detail-grid"><div class="detail-box"><div class="detail-label">基礎ステータス</div><div class="stat-bar-row"><span>腕力:</span> <span class="stat-val">${d.baseStats.str}</span></div><div class="stat-bar-row"><span>知力:</span> <span class="stat-val">${d.baseStats.int}</span></div><div class="stat-bar-row"><span>信仰:</span> <span class="stat-val">${d.baseStats.pie}</span></div><div class="stat-bar-row"><span>体力:</span> <span class="stat-val">${d.baseStats.vit}</span></div></div><div class="detail-box"><div class="detail-label">特徴</div><div style="font-size:0.8em; text-align:left;"><div style="margin-bottom:4px;">🛠️ <b>装備:</b> ${equips}</div><div>✨ <b>習得:</b> ${spellStr}</div></div></div></div></div>`; document.getElementById('job-desc').innerHTML = html; }
+function executeClassChange() { if(!selectedJobId) return alert("職業を選択してください"); if(!party[templeTargetIndex]) return; const p = party[templeTargetIndex]; if(p.jobId === selectedJobId) return alert("すでにその職業です"); if(!confirm("レベルが1に戻りますがよろしいですか？")) return; p.jobId = selectedJobId; p.level = 1; p.exp = 0; initCharacter(p); calculateStats(p); p.hp = p.maxHp; alert("転職しました！"); selectTempleMember(templeTargetIndex); }
+function checkLevelUp() { const p = party[templeTargetIndex]; const req = p.level * 100; if (p.exp >= req) { bonusPoints = 3; tempStatAlloc={str:0,int:0,pie:0,vit:0,agi:0,luc:0}; document.getElementById('job-select-area').style.display='none'; document.getElementById('levelup-area').style.display='block'; renderLevelUpStats(); updateBonusUI(); } else { alert(`経験値が足りません (あと ${req - p.exp})`); } }
+function executeLevelUp() { if(bonusPoints > 0) return alert("ポイントを使い切ってください"); const p = party[templeTargetIndex]; const req = p.level * 100; p.level++; p.exp -= req; for(let k in tempStatAlloc) p.stats[k]+=tempStatAlloc[k]; p.maxHp += Math.floor(p.stats.vit/2); for(let k in p.spells) { if(p.spells[k].max > 0) p.spells[k].max += 1; } calculateStats(p); p.hp = p.maxHp; alert("レベルアップしました！"); document.getElementById('levelup-area').style.display='none'; selectTempleMember(templeTargetIndex); }
+function renderLevelUpStats() { const p = party[templeTargetIndex]; const stats = ['str','int','pie','vit','agi','luc']; const labels = {str:'腕力',int:'知力',pie:'信仰',vit:'体力',agi:'敏捷',luc:'運'}; const c = document.getElementById('levelup-stats'); c.innerHTML = stats.map(k => `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;"><span>${labels[k]}: <span style="color:#fff; font-weight:bold;">${p.stats[k] + tempStatAlloc[k]}</span></span><div><button class="btn" style="width:30px; height:30px;" onclick="addStat('${k}', -1)">-</button><button class="btn" style="width:30px; height:30px;" onclick="addStat('${k}', 1)">+</button></div></div>`).join(''); }
+function addStat(k, v) { if(v > 0 && bonusPoints > 0) { tempStatAlloc[k]++; bonusPoints--; } else if (v < 0 && tempStatAlloc[k] > 0) { tempStatAlloc[k]--; bonusPoints++; } renderLevelUpStats(); updateBonusUI(); }
+function updateBonusUI() { document.getElementById('bonus-points').innerText = bonusPoints; }
 function movePlayer(t) { if(isBattle)return; let dx=0, dy=0, d=playerPos.dir; if(t==='forward'){if(d===0)dy=-1;if(d===1)dx=1;if(d===2)dy=1;if(d===3)dx=-1;} else {if(d===0)dy=1;if(d===1)dx=-1;if(d===2)dy=-1;if(d===3)dx=1;} executeMove(dx,dy); }
 function turnPlayer(d) { if(isBattle)return; if(d==='left')playerPos.dir=(playerPos.dir+3)%4; if(d==='right')playerPos.dir=(playerPos.dir+1)%4; updateDungeonUI(); }
-function executeMove(dx, dy) {
-    const nx=playerPos.x+dx, ny=playerPos.y+dy;
-    if(nx<0||nx>=mapSize||ny<0||ny>=mapSize){ log("行き止まりだ。"); return; }
-    if(currentMapData[ny][nx]===1){ visitedMaps[playerPos.floor][ny][nx]=true; log("壁だ。"); updateDungeonUI(); return; }
-    playerPos.x=nx; playerPos.y=ny; checkObject(); updatePlayerVision(); updateDungeonUI();
-    party.forEach(p => { if(p.status==='poison' && p.alive) { p.hp -= 1; if(p.hp<=0) { p.hp=0; p.alive=false; log(`${p.name}は毒で倒れた...`); } } }); updateDungeonUI();
-    const t=currentMapData[ny][nx];
-    if(t===3){ log("殺気を感じる..."); setTimeout(startBossBattle,1000); return; }
-    if(t===4) performEvent(); 
-    if(![2,4,5,9].includes(t) && Math.random()<0.15) startBattle();
-}
+function executeMove(dx, dy) { const nx=playerPos.x+dx, ny=playerPos.y+dy; if(nx<0||nx>=mapSize||ny<0||ny>=mapSize){ log("行き止まりだ。"); return; } if(currentMapData[ny][nx]===1){ visitedMaps[playerPos.floor][ny][nx]=true; log("壁だ。"); updateDungeonUI(); return; } playerPos.x=nx; playerPos.y=ny; checkObject(); updatePlayerVision(); updateDungeonUI(); party.forEach(p => { if(p.status==='poison' && p.alive) { p.hp -= 1; if(p.hp<=0) { p.hp=0; p.alive=false; log(`${p.name}は毒で倒れた...`); } } }); updateDungeonUI(); const t=currentMapData[ny][nx]; if(t===3){ log("殺気を感じる..."); setTimeout(startBossBattle,1000); return; } if(t===4) performEvent(); if(![2,4,5,9].includes(t) && Math.random()<0.15) startBattle(); }
 function checkObject() { document.getElementById('btn-return').style.display=(currentMapData[playerPos.y][playerPos.x]===9)?'block':'none'; }
-function checkArea() { 
-    if(isBattle)return; const v=currentMapData[playerPos.y][playerPos.x]; 
-    if(v===9)log("出口だ。"); 
-    else if(v===2){ 
-        let f=playerPos.floor;
-        if(f===1){loadMap(2);playerPos.x=1;playerPos.y=1;} else if(f===2){if(playerPos.x===1)loadMap(1),playerPos.x=3,playerPos.y=3;else loadMap(3),playerPos.x=1,playerPos.y=1;}
-        else if(f===3){if(playerPos.x===1)loadMap(2),playerPos.x=7,playerPos.y=8;else loadMap(4),playerPos.x=8,playerPos.y=1;}
-        else if(f===4){if(playerPos.x===8)loadMap(3),playerPos.x=8,playerPos.y=8;else loadMap(5),playerPos.x=1,playerPos.y=7;}
-        else if(f===5){loadMap(4),playerPos.x=1,playerPos.y=7;}
-        updatePlayerVision(); updateDungeonUI(); log("移動した");
-    } else if(v===5) { 
-        const key = `${playerPos.floor}_${playerPos.x}_${playerPos.y}`; 
-        if(!openedChests.includes(key) && chestData[key]) { const itemId = chestData[key]; partyInventory.push(itemId); openedChests.push(key); alert(`${itemData[itemId].name}を手に入れた！`); } 
-        else log("宝箱は空だ。"); 
-    } else if(v===4) performEvent(); else log("特に何もない。"); 
-}
+function checkArea() { if(isBattle)return; const v=currentMapData[playerPos.y][playerPos.x]; if(v===9)log("出口だ。"); else if(v===2){ let f=playerPos.floor; if(f===1){loadMap(2);playerPos.x=1;playerPos.y=1;} else if(f===2){if(playerPos.x===1)loadMap(1),playerPos.x=3,playerPos.y=3;else loadMap(3),playerPos.x=1,playerPos.y=1;} else if(f===3){if(playerPos.x===1)loadMap(2),playerPos.x=7,playerPos.y=8;else loadMap(4),playerPos.x=8,playerPos.y=1;} else if(f===4){if(playerPos.x===8)loadMap(3),playerPos.x=8,playerPos.y=8;else loadMap(5),playerPos.x=1,playerPos.y=7;} else if(f===5){loadMap(4),playerPos.x=1,playerPos.y=7;} updatePlayerVision(); updateDungeonUI(); log("移動した"); } else if(v===5) { const key = `${playerPos.floor}_${playerPos.x}_${playerPos.y}`; if(!openedChests.includes(key) && chestData[key]) { const itemId = chestData[key]; partyInventory.push(itemId); openedChests.push(key); alert(`${itemData[itemId].name}を手に入れた！`); } else log("宝箱は空だ。"); } else if(v===4) performEvent(); else log("特に何もない。"); }
 function performEvent() { log("神秘的な泉がある... 水を飲んだ。"); party.forEach(p => { p.hp = p.maxHp; p.status='normal'; }); alert("全員のHPと状態異常が回復した！"); }
 
+// --- 戦闘ロジック (複数敵対応版) ---
+
 function startBattle() {
-    let monsters = [];
-    if(playerPos.floor===1) monsters=[{name:"スライム",hp:15,img:"slime.png",exp:5,gold:10},{name:"ゴブリン",hp:20,img:"goblin.png",exp:8,gold:20}];
-    else if(playerPos.floor===2) monsters=[{name:"ゴブリン",hp:20,img:"goblin.png",exp:8,gold:20},{name:"オーク",hp:40,img:"orc.png",exp:15,gold:40}];
-    else if(playerPos.floor<=4) monsters=[{name:"オーク",hp:40,img:"orc.png",exp:15,gold:40},{name:"スケルトン",hp:50,img:"skeleton.png",exp:25,gold:80}];
-    else if(playerPos.floor===5) monsters=[{name:"スケルトン",hp:50,img:"skeleton.png",exp:25,gold:80},{name:"ゴースト",hp:40,img:"ghost.png",exp:30,gold:100,type:"ghost"}];
-    else if(playerPos.floor===100) monsters=[{name:"トレント",hp:80,img:"treant.png",exp:50,gold:150},{name:"シルフ",hp:60,img:"sylph.png",exp:40,gold:120}];
-    let e = monsters[Math.floor(Math.random()*monsters.length)];
-    setupEnemy(e, false); log(`${enemy.name} が出現した！`);
+    let monsterCandidates = [];
+    if(playerPos.floor===1) monsterCandidates=[{name:"スライム",hp:15,img:"slime.png",exp:5,gold:10},{name:"ゴブリン",hp:20,img:"goblin.png",exp:8,gold:20}];
+    else if(playerPos.floor===2) monsterCandidates=[{name:"ゴブリン",hp:20,img:"goblin.png",exp:8,gold:20},{name:"オーク",hp:40,img:"orc.png",exp:15,gold:40}];
+    else if(playerPos.floor<=4) monsterCandidates=[{name:"オーク",hp:40,img:"orc.png",exp:15,gold:40},{name:"スケルトン",hp:50,img:"skeleton.png",exp:25,gold:80}];
+    else if(playerPos.floor===5) monsterCandidates=[{name:"スケルトン",hp:50,img:"skeleton.png",exp:25,gold:80},{name:"ゴースト",hp:40,img:"ghost.png",exp:30,gold:100,type:"ghost"}];
+    else if(playerPos.floor===100) monsterCandidates=[{name:"トレント",hp:80,img:"treant.png",exp:50,gold:150},{name:"シルフ",hp:60,img:"sylph.png",exp:40,gold:120}];
+    else monsterCandidates=[{name:"スライム",hp:15,img:"slime.png",exp:5,gold:10}]; // fallback
+
+    const count = Math.floor(Math.random() * 3) + 1; 
+    let enemyList = [];
+    const suffix = ["A", "B", "C"];
+    
+    for(let i=0; i<count; i++) {
+        let tpl = monsterCandidates[Math.floor(Math.random()*monsterCandidates.length)];
+        // 敵ごとにインスタンスを作成
+        let nm = tpl.name;
+        if(count > 1) nm += ` ${suffix[i]}`;
+        enemyList.push({ ...tpl, name: nm, maxHp: tpl.hp, isBoss: false, isCharging: false, id: i });
+    }
+    
+    setupBattle(enemyList);
+    log("魔物が現れた！");
 }
+
 function startBossBattle() { 
+    // ボスは1体固定（必要なら配列にするだけで複数ボスも可能）
+    let bossData;
     if(playerPos.floor===100) {
-        setupEnemy({ name: "グリフォン", hp: 500, img: "griffin.png", exp:3000, gold:5000 }, true);
+        bossData = { name: "グリフォン", hp: 500, img: "griffin.png", exp:3000, gold:5000 };
         log("🦅 グリフォンが襲いかかってきた！！！");
     } else {
-        setupEnemy({ name: "ドラゴン", hp: 300, img: "dragon.png", exp:1000, gold:5000 }, true);
+        bossData = { name: "ドラゴン", hp: 300, img: "dragon.png", exp:1000, gold:5000 };
         log("🔥 ドラゴンが出現した！！！");
     }
+    setupBattle([{ ...bossData, maxHp: bossData.hp, isBoss: true, isCharging: false, id: 0 }]);
 }
-function setupEnemy(data, isBoss) { 
+
+function setupBattle(enemyList) { 
     isBattle = true; 
-    enemy = { ...data, maxHp: data.hp, isBoss: isBoss, isCharging: false }; 
+    enemies = enemyList; // グローバル変数へセット
     
-    const img = document.getElementById('enemy-img'); // 変数定義して使い回すと便利です
-    img.src = data.img; 
-    img.style.display = 'block'; 
+    // DOM要素のセットアップ
+    const mainArea = document.getElementById('main-area');
+    const originalImg = document.getElementById('enemy-img');
     
-    // ★追加: 前回の戦闘の揺れ設定が残っていたら削除する
-    img.classList.remove('shake-enemy');
+    // 既存の動的生成された敵画像を削除
+    document.querySelectorAll('.dynamic-enemy-container').forEach(e => e.remove());
     
-    // (以下、既存コードのまま)
+    // オリジナルの画像要素は非表示
+    originalImg.style.display = 'none';
+    originalImg.classList.remove('shake-enemy');
+
+    // 敵の数に応じてコンテナ（画像＋名前）を生成・配置
+    enemies.forEach((e, idx) => {
+        const container = document.createElement('div');
+        container.id = `enemy-unit-${idx}`; // IDをコンテナに付与
+        container.className = 'dynamic-enemy-container';
+        container.style.position = 'absolute';
+        container.style.top = '50%';
+        container.style.transform = 'translate(-50%, -50%)';
+        container.style.zIndex = '10';
+        container.style.textAlign = 'center'; // 名前を中央揃え
+        
+        // 配置ロジック
+        let leftPos = '50%';
+        if(enemies.length === 2) {
+            leftPos = (idx === 0) ? '35%' : '65%';
+        } else if(enemies.length === 3) {
+            if(idx===0) leftPos = '25%';
+            if(idx===1) leftPos = '50%';
+            if(idx===2) leftPos = '75%';
+        }
+        container.style.left = leftPos;
+
+        const nameLabel = document.createElement('div');
+        nameLabel.innerText = e.name;
+        nameLabel.style.color = "#fff";
+        nameLabel.style.fontSize = "12px";
+        nameLabel.style.fontWeight = "bold";
+        nameLabel.style.textShadow = "1px 1px 2px #000, -1px -1px 2px #000";
+        nameLabel.style.marginBottom = "2px";
+        nameLabel.style.whiteSpace = "nowrap";
+        
+        const img = document.createElement('img');
+        img.src = e.img;
+        img.id = `enemy-img-${idx}`; 
+        img.style.width = '100px'; 
+        img.style.height = '100px';
+        img.style.imageRendering = 'pixelated';
+        img.style.filter = 'drop-shadow(0 10px 10px rgba(0,0,0,0.8))';
+        
+        container.appendChild(nameLabel);
+        container.appendChild(img);
+        
+        mainArea.appendChild(container);
+    });
+    
     if(ctx){ ctx.fillStyle="rgba(0,0,0,0.7)"; ctx.fillRect(0,0,300,200); } 
     document.getElementById('enemy-stat').style.visibility = 'visible'; 
-    document.getElementById('enemy-name').innerText = enemy.name; 
+    
+    updateEnemyStatName();
+    
     document.getElementById('battle-msg').style.display = 'block'; 
     actionQueue = []; 
     party.forEach(p => p.isDefending = false); 
     activeMemberIndex = 0; 
     startInputPhase(true); 
-}function startInputPhase(isFirst=false) { if(!isFirst) activeMemberIndex++; if(activeMemberIndex >= party.length) { executeTurnActions(); return; } const p = party[activeMemberIndex]; if(!p.alive) { startInputPhase(); return; } if(p.status === 'paralyze') { log(`${p.name}は麻痺して動けない！`); actionQueue.push({type:'wait', actorIndex:activeMemberIndex, name:p.name}); startInputPhase(); return; } document.getElementById('battle-msg').innerText = `▶ ${p.name} のコマンド`; toggleControls('battle'); }
-function fight(act) { const p = party[activeMemberIndex]; if(act==='run') { if(enemy.isBoss || Math.random()<0.5) { log("逃げられなかった！"); actionQueue.push({type:'wait',actorIndex:activeMemberIndex}); } else { log("逃げ切った！"); endBattle(); return; } } else if(act==='attack') actionQueue.push({type:'attack', actorIndex:activeMemberIndex, name:p.name}); else if(act==='defend') actionQueue.push({type:'defend', actorIndex:activeMemberIndex, name:p.name}); startInputPhase(); }
-function castSpell(type) { const p = party[activeMemberIndex]; if(p.spells[type].current <= 0) return; battleSpellMode = 'spell'; if(type==='heal') { toggleControls('target'); ['btn-target-0','btn-target-1','btn-target-2'].forEach((id,i) => { document.getElementById(id).innerText=`${party[i].name}(${party[i].hp})`; document.getElementById(id).onclick = () => executeHeal(i); }); } else { actionQueue.push({type:type, actorIndex:activeMemberIndex, name:p.name}); startInputPhase(); } }
+}
+
+function updateEnemyStatName() {
+    const container = document.getElementById('enemy-stat');
+    const aliveEnemies = enemies.filter(e => e.hp > 0);
+    
+    if (aliveEnemies.length === 0) {
+        container.style.visibility = 'hidden';
+        return;
+    }
+
+    // ★修正: 文字サイズを小さく (0.85em程度) し、行間も調整
+    let html = aliveEnemies.map(e => `<div style="font-size:0.85em; margin-bottom:2px;">👾 ${e.name}</div>`).join('');
+    
+    container.innerHTML = html;
+    container.style.visibility = 'visible';
+}
+
+function startInputPhase(isFirst=false) { 
+    if(!isFirst) activeMemberIndex++; 
+    if(activeMemberIndex >= party.length) { executeTurnActions(); return; } 
+    const p = party[activeMemberIndex]; 
+    if(!p.alive) { startInputPhase(); return; } 
+    if(p.status === 'paralyze') { log(`${p.name}は麻痺して動けない！`); actionQueue.push({type:'wait', actorIndex:activeMemberIndex, name:p.name}); startInputPhase(); return; } 
+    document.getElementById('battle-msg').innerText = `▶ ${p.name} のコマンド`; 
+    toggleControls('battle'); 
+}
+
+function fight(act) { 
+    const p = party[activeMemberIndex]; 
+    if(act==='run') { 
+        if(enemies.some(e=>e.isBoss) || Math.random()<0.5) { log("逃げられなかった！"); actionQueue.push({type:'wait',actorIndex:activeMemberIndex}); } 
+        else { log("逃げ切った！"); endBattle(); return; } 
+        startInputPhase();
+    } else if(act==='attack') {
+        if(enemies.filter(e=>e.hp>0).length > 1) {
+            openEnemyTargetMenu('attack');
+            return; 
+        }
+        let tIdx = enemies.findIndex(e => e.hp > 0);
+        actionQueue.push({type:'attack', actorIndex:activeMemberIndex, targetIndex:tIdx, name:p.name}); 
+        startInputPhase(); 
+    } else if(act==='defend') {
+        actionQueue.push({type:'defend', actorIndex:activeMemberIndex, name:p.name}); 
+        startInputPhase();
+    } else {
+        startInputPhase(); 
+    }
+}
+
+function castSpell(type) { 
+    const p = party[activeMemberIndex]; 
+    if(p.spells[type].current <= 0) return; 
+    battleSpellMode = 'spell'; 
+    
+    if(type==='heal') { 
+        toggleControls('target'); 
+        ['btn-target-0','btn-target-1','btn-target-2'].forEach((id,i) => { 
+            document.getElementById(id).innerText=`${party[i].name}(${party[i].hp})`; 
+            document.getElementById(id).onclick = () => executeHeal(i); 
+        }); 
+    } else if(['flame','double'].includes(type)) {
+        if(enemies.filter(e=>e.hp>0).length > 1) {
+            openEnemyTargetMenu('spell', type);
+            return;
+        }
+        let tIdx = enemies.findIndex(e => e.hp > 0);
+        actionQueue.push({type:type, actorIndex:activeMemberIndex, targetIndex:tIdx, name:p.name}); 
+        startInputPhase();
+    } else { 
+        actionQueue.push({type:type, actorIndex:activeMemberIndex, name:p.name}); 
+        startInputPhase(); 
+    } 
+}
+
+function openEnemyTargetMenu(actionType, spellKey=null) {
+    toggleControls('target');
+    const btns = ['btn-target-0','btn-target-1','btn-target-2'];
+    btns.forEach(id => document.getElementById(id).style.display = 'none'); 
+    
+    enemies.forEach((e, i) => {
+        if(e.hp <= 0) return; 
+        const btn = document.getElementById(btns[i]); 
+        if(btn) {
+            btn.style.display = 'inline-block';
+            btn.innerText = `${e.name}`; 
+            btn.onclick = () => {
+                const p = party[activeMemberIndex];
+                if(actionType === 'attack') {
+                    actionQueue.push({type:'attack', actorIndex:activeMemberIndex, targetIndex:i, name:p.name});
+                } else if(actionType === 'spell') {
+                    actionQueue.push({type:spellKey, actorIndex:activeMemberIndex, targetIndex:i, name:p.name});
+                }
+                startInputPhase();
+            };
+        }
+    });
+    
+    const backBtn = document.querySelector('#target-controls button:last-child');
+    backBtn.onclick = () => {
+        if(actionType==='spell') openSpellMenu();
+        else toggleControls('battle');
+    };
+}
+
 function openBattleItemMenu() { menuReturnTo = 'battle'; battleSpellMode = 'item'; openItemMenu(); }
 function executeBattleItem(itemId, targetIdx) { const invIdx = partyInventory.indexOf(itemId); if(invIdx > -1) partyInventory.splice(invIdx, 1); actionQueue.push({type:'item', actorIndex:activeMemberIndex, targetIndex:targetIdx, itemId:itemId, name:party[activeMemberIndex].name}); startInputPhase(); }
 function executeHeal(idx) { actionQueue.push({type:'heal', actorIndex:activeMemberIndex, targetIndex:idx, name:party[activeMemberIndex].name}); startInputPhase(); }
-// game.js 内の openSpellMenu 関数を以下のように書き換えてください
 
 function openSpellMenu() { 
     toggleControls('spell'); 
     const p = party[activeMemberIndex]; 
-    
     const icons = { flame: "🔥", heal: "💚", double: "⚔️", escape: "💨" };
-
     const setBtn = (id, spell) => { 
         const b = document.getElementById(id); 
         if(p.spells[spell] && p.spells[spell].max > 0) { 
             b.style.display = 'inline-block'; 
-            // ★変更: <br>を削除し、回数を横に配置。回数の文字色を薄く設定
             b.innerHTML = `<span style="font-size:1.2em; margin-right:4px;">${icons[spell]}</span>${p.spells[spell].name} <span style="font-size:0.9em; color:#aaa;">(${p.spells[spell].current})</span>`;
-            
             b.disabled = p.spells[spell].current <= 0; 
-        } else { 
-            b.style.display = 'none'; 
-        } 
+        } else { b.style.display = 'none'; } 
     }; 
-    setBtn('btn-spell-flame','flame'); 
-    setBtn('btn-spell-heal','heal'); 
-    setBtn('btn-skill-double','double'); 
-    setBtn('btn-spell-escape','escape'); 
+    setBtn('btn-spell-flame','flame'); setBtn('btn-spell-heal','heal'); setBtn('btn-skill-double','double'); setBtn('btn-spell-escape','escape'); 
 }
-function closeSpellMenu() {
-    // 戦闘コマンド（攻撃・呪文・防御...）の表示に戻す
-    toggleControls('battle');
-}
+function closeSpellMenu() { toggleControls('battle'); }
+
 function executeTurnActions() { toggleControls('none'); document.getElementById('battle-msg').innerText = "⚔️ 戦闘中..."; processQueue(); }
-function processQueue() { if(enemy.hp<=0) { checkWin(); return; } if(actionQueue.length===0) { setTimeout(enemyTurn, 500); return; } const act = actionQueue.shift(); const actor = party[act.actorIndex]; if(!actor.alive) { processQueue(); return; } if(act.type==='defend') { actor.isDefending=true; document.getElementById('battle-msg').innerText = `🛡️ ${actor.name} は防御`; log(`${actor.name}は防御した`); } else if(act.type==='wait') {} else if(act.type==='attack') { document.getElementById('battle-msg').innerText = `⚔️ ${actor.name} の攻撃`; playVfx('slash'); let dmg = Math.max(1, actor.atk - Math.floor(Math.random()*2)); if(enemy.type === 'ghost') { dmg = Math.floor(dmg * 0.2); log("物理攻撃が効きにくい！"); } enemy.hp -= dmg; log(`${actor.name}の攻撃！ ${dmg}ダメ`); } else if(act.type==='flame') { document.getElementById('battle-msg').innerText = `🔥 ${actor.name} のフレイム`; actor.spells.flame.current--; playVfx('fire'); let dmg = 15 + actor.stats.int; enemy.hp -= dmg; log(`${actor.name}のフレイム！ ${dmg}ダメ`); } else if(act.type==='double') { document.getElementById('battle-msg').innerText = `⚔️ ${actor.name} の二段切り`; actor.spells.double.current--; playVfx('slash'); let dmg = (actor.atk * 2); if(enemy.type === 'ghost') dmg = Math.floor(dmg*0.2); enemy.hp -= dmg; log(`${actor.name}の二段切り！ ${dmg}ダメ`); } else if(act.type==='heal') { document.getElementById('battle-msg').innerText = `✨ ${actor.name} のヒール`; actor.spells.heal.current--; playVfx('heal'); const t = party[act.targetIndex]; let rec = 20 + actor.stats.pie; t.hp += rec; if(t.hp>t.maxHp) t.hp=t.maxHp; if(!t.alive){ t.alive=true; log(`${t.name}が蘇生した`); } else log(`${t.name}が回復した`); } else if(act.type==='escape') { document.getElementById('battle-msg').innerText = `💨 ${actor.name} のエスケープ`; actor.spells.escape.current--; log(`${actor.name}はエスケープを唱えた！`); endBattle(); returnToTown(true); return; } else if(act.type==='item') { const item = itemData[act.itemId]; const t = party[act.targetIndex]; document.getElementById('battle-msg').innerText = `💊 ${actor.name} は ${item.name} を使用`; if(item.effect === 'heal') { playVfx('heal'); t.hp += item.power; if(t.hp > t.maxHp) t.hp = t.maxHp; log(`${t.name}のHPが回復した`); } else if(item.effect === 'curePoison') { if(t.status==='poison') {t.status='normal'; log("毒が消えた");} else log("効果がなかった"); } else if(item.effect === 'curePara') { if(t.status==='paralyze') {t.status='normal'; log("麻痺が治った");} else log("効果がなかった"); } } updateDungeonUI(); setTimeout(processQueue, 800); }
-function checkWin() { if(enemy.hp<=0) { document.getElementById('enemy-img').style.opacity=0; log(`${enemy.name}を倒した！ EXP:${enemy.exp} Gold:${enemy.gold}`); partyGold += enemy.gold; party.forEach(p => { if(p.alive) p.exp += enemy.exp; }); if(enemy.isBoss) setTimeout(gameClear,1000); else setTimeout(endBattle,1000); } }
-function enemyTurn() { if(party.every(p=>!p.alive)) { gameOver(); return; } if(enemy.isBoss && enemy.isCharging) { enemy.isCharging=false; playVfx('fire'); log("ドラゴンの超強力な一撃！"); let t = getRandomTarget(); if(t) takeDamage(t, 60); finishEnemyTurn(); return; } if(enemy.isBoss && Math.random()<0.3) { enemy.isCharging=true; log("ドラゴンは力を溜めている..."); finishEnemyTurn(); return; } playVfx('damage'); let t = getRandomTarget(); if(t) { let dmg = 5 + (playerPos.floor * 3); if(playerPos.floor===100) dmg += 20; if(enemy.isBoss) dmg += 15; takeDamage(t, dmg); if(enemy.name==="スライム" && Math.random()<0.3) { t.status='poison'; log(`${t.name}は毒を受けた！`); } } finishEnemyTurn(); }
+
+function processQueue() { 
+    if(enemies.every(e => e.hp <= 0)) { checkWin(); return; } 
+    if(actionQueue.length===0) { setTimeout(enemyTurn, 500); return; } 
+    
+    const act = actionQueue.shift(); 
+    const actor = party[act.actorIndex]; 
+    if(!actor.alive) { processQueue(); return; } 
+
+    let targetEnemy = null;
+    let finalTargetIndex = act.targetIndex;
+
+    if(typeof act.targetIndex === 'number' && ['attack','flame','double'].includes(act.type)) {
+        targetEnemy = enemies[act.targetIndex];
+        
+        // 指定したターゲットが既に死んでいる場合、他の生存している敵を狙う
+        if(!targetEnemy || targetEnemy.hp <= 0) {
+            targetEnemy = enemies.find(e => e.hp > 0);
+            if(targetEnemy) {
+                finalTargetIndex = enemies.indexOf(targetEnemy);
+            }
+        }
+    }
+
+    if(act.type==='defend') { 
+        actor.isDefending=true; document.getElementById('battle-msg').innerText = `🛡️ ${actor.name} は防御`; log(`${actor.name}は防御した`); 
+    } else if(act.type==='wait') {
+    } else if(act.type==='attack') { 
+        if(targetEnemy) {
+            document.getElementById('battle-msg').innerText = `⚔️ ${actor.name} の攻撃`; 
+            playVfx('slash', finalTargetIndex); 
+            let dmg = Math.max(1, actor.atk - Math.floor(Math.random()*2)); 
+            if(targetEnemy.type === 'ghost') { dmg = Math.floor(dmg * 0.2); log("物理攻撃が効きにくい！"); } 
+            targetEnemy.hp -= dmg; 
+            log(`${actor.name}の攻撃！ ${targetEnemy.name}に${dmg}ダメ`); 
+            checkEnemyDeath(targetEnemy, finalTargetIndex);
+        }
+    } else if(act.type==='flame') { 
+        if(targetEnemy) {
+            document.getElementById('battle-msg').innerText = `🔥 ${actor.name} のフレイム`; 
+            actor.spells.flame.current--; 
+            playVfx('fire', finalTargetIndex); 
+            let dmg = 15 + actor.stats.int; 
+            targetEnemy.hp -= dmg; 
+            log(`${actor.name}のフレイム！ ${targetEnemy.name}に${dmg}ダメ`); 
+            checkEnemyDeath(targetEnemy, finalTargetIndex);
+        }
+    } else if(act.type==='double') { 
+        if(targetEnemy) {
+            document.getElementById('battle-msg').innerText = `⚔️ ${actor.name} の二段切り`; 
+            actor.spells.double.current--; 
+            playVfx('slash', finalTargetIndex); 
+            let dmg = (actor.atk * 2); 
+            if(targetEnemy.type === 'ghost') dmg = Math.floor(dmg*0.2); 
+            targetEnemy.hp -= dmg; 
+            log(`${actor.name}の二段切り！ ${targetEnemy.name}に${dmg}ダメ`); 
+            checkEnemyDeath(targetEnemy, finalTargetIndex);
+        }
+    } else if(act.type==='heal') { 
+        document.getElementById('battle-msg').innerText = `✨ ${actor.name} のヒール`; 
+        actor.spells.heal.current--; playVfx('heal'); 
+        const t = party[act.targetIndex]; let rec = 20 + actor.stats.pie; t.hp += rec; if(t.hp>t.maxHp) t.hp=t.maxHp; 
+        if(!t.alive){ t.alive=true; log(`${t.name}が蘇生した`); } else log(`${t.name}が回復した`); 
+    } else if(act.type==='escape') { 
+        document.getElementById('battle-msg').innerText = `💨 ${actor.name} のエスケープ`; 
+        actor.spells.escape.current--; log(`${actor.name}はエスケープを唱えた！`); 
+        endBattle(); returnToTown(true); return; 
+    } else if(act.type==='item') { 
+        const item = itemData[act.itemId]; const t = party[act.targetIndex]; 
+        document.getElementById('battle-msg').innerText = `💊 ${actor.name} は ${item.name} を使用`; 
+        if(item.effect === 'heal') { playVfx('heal'); t.hp += item.power; if(t.hp > t.maxHp) t.hp = t.maxHp; log(`${t.name}のHPが回復した`); } 
+        else if(item.effect === 'curePoison') { if(t.status==='poison') {t.status='normal'; log("毒が消えた");} else log("効果がなかった"); } 
+        else if(item.effect === 'curePara') { if(t.status==='paralyze') {t.status='normal'; log("麻痺が治った");} else log("効果がなかった"); } 
+    } 
+    updateDungeonUI(); 
+    updateEnemyStatName();
+    setTimeout(processQueue, 800); 
+}
+
+function checkEnemyDeath(targetEnemy, imgIdx) {
+    if(targetEnemy.hp <= 0) {
+        targetEnemy.hp = 0;
+        // コンテナごと非表示にする (IDは enemy-unit-{idx})
+        const unit = document.getElementById(`enemy-unit-${imgIdx}`);
+        if(unit) unit.style.display = 'none'; 
+        log(`${targetEnemy.name}を倒した！`);
+    }
+}
+
+function checkWin() { 
+    if(enemies.every(e => e.hp <= 0)) { 
+        let totalExp = 0;
+        let totalGold = 0;
+        enemies.forEach(e => { totalExp += e.exp; totalGold += e.gold; });
+        
+        // 敵コンテナを完全に消す
+        document.querySelectorAll('.dynamic-enemy-container').forEach(e => e.style.display = 'none');
+        
+        log(`勝利！ 合計 EXP:${totalExp} Gold:${totalGold}`); 
+        partyGold += totalGold; 
+        party.forEach(p => { if(p.alive) p.exp += totalExp; }); 
+        
+        if(enemies.some(e => e.isBoss)) setTimeout(gameClear,1000); 
+        else setTimeout(endBattle,1000); 
+    } 
+}
+
+function enemyTurn() { 
+    if(party.every(p=>!p.alive)) { gameOver(); return; } 
+
+    let actingEnemies = enemies.filter(e => e.hp > 0);
+    
+    const executeEnemyAction = (idx) => {
+        if(idx >= actingEnemies.length) {
+            finishEnemyTurn();
+            return;
+        }
+        const enemy = actingEnemies[idx];
+        
+        if(enemy.isBoss && enemy.isCharging) { 
+            enemy.isCharging=false; playVfx('fire'); log(`${enemy.name}の超強力な一撃！`); 
+            let t = getRandomTarget(); if(t) takeDamage(t, 60); 
+        } else if(enemy.isBoss && Math.random()<0.3) { 
+            enemy.isCharging=true; log(`${enemy.name}は力を溜めている...`); 
+        } else {
+            playVfx('damage'); 
+            let t = getRandomTarget(); 
+            if(t) { 
+                let dmg = 5 + (playerPos.floor * 3); 
+                if(playerPos.floor===100) dmg += 20; 
+                if(enemy.isBoss) dmg += 15; 
+                takeDamage(t, dmg); 
+                if(enemy.name.includes("スライム") && Math.random()<0.3) { 
+                    t.status='poison'; log(`${t.name}は毒を受けた！`); 
+                } 
+            }
+        }
+        
+        updateDungeonUI();
+        setTimeout(() => executeEnemyAction(idx + 1), 800);
+    };
+
+    executeEnemyAction(0);
+}
+
 function getRandomTarget() { const alive = party.filter(p=>p.alive); if(alive.length===0) return null; return alive[Math.floor(Math.random()*alive.length)]; }
 function takeDamage(target, dmg) { if(target.isDefending) dmg = Math.floor(dmg/2); dmg -= Math.floor(target.def/2); if(dmg<1) dmg=1; target.hp -= dmg; log(`${target.name}に${dmg}のダメージ`); if(target.hp<=0) { target.hp=0; target.alive=false; log(`${target.name}は倒れた`); } updateDungeonUI(); }
 function finishEnemyTurn() { if(party.every(p=>!p.alive)) setTimeout(gameOver,1000); else { activeMemberIndex=0; setTimeout(()=>startInputPhase(true), 1000); } }
-function endBattle() { isBattle=false; document.getElementById('enemy-img').style.display='none'; document.getElementById('enemy-stat').style.visibility='hidden'; document.getElementById('battle-msg').style.display='none'; document.getElementById('enemy-img').style.opacity=1; updateDungeonUI(); toggleControls('move'); }
+
+function endBattle() { 
+    isBattle=false; 
+    // コンテナ削除
+    document.querySelectorAll('.dynamic-enemy-container').forEach(e => e.remove());
+    document.getElementById('enemy-stat').style.visibility='hidden'; 
+    document.getElementById('battle-msg').style.display='none'; 
+    updateDungeonUI(); 
+    toggleControls('move'); 
+}
+
 function gameOver() { log("全滅しました..."); setTimeout(()=>{ isBattle=false; endBattle(); returnToTown(true); party.forEach(p=>{p.hp=1;p.alive=true;p.status='normal';}); partyGold = Math.floor(partyGold/2); townLog("全滅した... 所持金が半分になった。"); updateTownStatus(); },2000); }
-function gameClear() { dragonDefeated = true; alert("ドラゴンを討伐した！\n町へ戻ります。"); endBattle(); returnToTown(true); townLog("ドラゴンを討伐し、英雄として迎えられた！"); updateTownStatus(); }
-function getRelPos(f,s){let x=playerPos.x,y=playerPos.y,d=playerPos.dir;if(d===0)y-=f;if(d===1)x+=f;if(d===2)y+=f;if(d===3)x-=f;if(d===0)x+=s;if(d===1)y+=s;if(d===2)x-=s;if(d===3)y-=s;if(x<0||x>=mapSize||y<0||y>=mapSize)return 1;return(currentMapData[y][x]===1)?1:0;}
-function getEquipJobString(subType) { let jobNames = []; for(let jKey in jobData) { if(jobData[jKey].canEquip.includes(subType)) jobNames.push(jobData[jKey].name); } return jobNames.length > 0 ? `[${jobNames.join('/')}]` : "[装備不可]"; }
-function playVfx(t){const l=document.getElementById('vfx-layer'),e=document.getElementById('enemy-img'),m=document.getElementById('main-area');const d=document.createElement('div');if(t==='slash'||t==='fire'){d.className=(t==='slash')?'vfx-slash':'vfx-fire';e.classList.remove('shake-enemy');void e.offsetWidth;e.classList.add('shake-enemy');}else if(t==='heal')d.className='vfx-heal';else if(t==='damage'){d.className='vfx-damage';m.classList.remove('shake-screen');void m.offsetWidth;m.classList.add('shake-screen');}l.appendChild(d);setTimeout(()=>d.remove(),1000);}
+function gameClear() { alert("ドラゴンを討伐した！\n町へ戻ります。"); endBattle(); returnToTown(true); townLog("ドラゴンを討伐し、英雄として迎えられた！"); updateTownStatus(); }
+
+function playVfx(t, targetIdx=null){
+    const l=document.getElementById('vfx-layer');
+    const m=document.getElementById('main-area');
+    const d=document.createElement('div');
+    
+    // ターゲットの取得（コンテナを取得）
+    let targetUnit = null;
+    if(targetIdx !== null) targetUnit = document.getElementById(`enemy-unit-${targetIdx}`);
+    
+    if(t==='slash'||t==='fire'){
+        d.className=(t==='slash')?'vfx-slash':'vfx-fire';
+        
+        // コンテナの位置に合わせてエフェクトを配置
+        if(targetUnit) {
+            targetUnit.classList.remove('shake-enemy');
+            void targetUnit.offsetWidth;
+            targetUnit.classList.add('shake-enemy');
+
+            d.style.position = 'absolute';
+            d.style.left = targetUnit.style.left; 
+            d.style.top = targetUnit.style.top;
+        }
+    } else if(t==='heal'){
+        d.className='vfx-heal';
+    } else if(t==='damage'){
+        d.className='vfx-damage';
+        m.classList.remove('shake-screen');
+        void m.offsetWidth;
+        m.classList.add('shake-screen');
+    }
+    l.appendChild(d);
+    setTimeout(()=>d.remove(),1000);
+}
 function initMapUI(){const a=document.getElementById('map-area');a.innerHTML="";for(let y=0;y<mapSize;y++)for(let x=0;x<mapSize;x++){let d=document.createElement('div');d.id=`cell-${x}-${y}`;d.className='cell cell-unknown';a.appendChild(d);}}
 function updatePlayerVision(){[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}].forEach(o=>{let tx=playerPos.x+o.x,ty=playerPos.y+o.y;if(tx>=0&&tx<mapSize&&ty>=0&&ty<mapSize)visitedMaps[playerPos.floor][ty][tx]=true;});}
 function renderMap(){const ar=["▲","▶","▼","◀"];const vis=visitedMaps[playerPos.floor];for(let y=0;y<mapSize;y++)for(let x=0;x<mapSize;x++){const c=document.getElementById(`cell-${x}-${y}`);c.innerText="";if(x===playerPos.x&&y===playerPos.y){c.className='cell cell-hero';c.innerText=ar[playerPos.dir];continue;}if(!vis[y][x]){c.className='cell cell-unknown';continue;}const v=currentMapData[y][x];if(v===1)c.className='cell cell-wall';else if(v===2)c.className='cell cell-stairs';else if(v===3)c.className='cell cell-boss';else if(v===4)c.className='cell cell-event';else if(v===5)c.className='cell cell-chest';else if(v===9)c.className='cell cell-entrance';else c.className='cell cell-floor';}}
