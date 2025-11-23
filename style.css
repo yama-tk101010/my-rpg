@@ -512,8 +512,8 @@ h1, h2 {
     .btn { height: 42px; font-size: 0.9em; margin: 0; }
     .move-pad { gap: 3px; margin-bottom: 0; }
     #btn-return {
-        height: 38px;
-        margin-top: 2px;
+        /* height: 38px;  ←削除 (他のボタンと同じ42pxになります) */
+        /* margin-top: 2px; ←削除 (グリッドのgapで調整されます) */
         background: linear-gradient(180deg, #550, #330);
         border-color: #cc0;
         color: #ffeb3b;

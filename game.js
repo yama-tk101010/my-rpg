@@ -661,7 +661,7 @@ function handleTileEvent(tile, x, y) {
     }
 }
 
-function checkObject() { document.getElementById('btn-return').style.display=(currentMapData[playerPos.y][playerPos.x]===9)?'block':'none'; }
+function checkObject() { document.getElementById('btn-return').style.display=(currentMapData[playerPos.y][playerPos.x]===9)?'flex':'none'; }
 
 function checkArea() { 
     if(isBattle)return; 
