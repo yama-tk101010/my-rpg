@@ -433,7 +433,7 @@ h1, h2 {
         padding: 0;
         gap: 0;
         border: none;
-        grid-template-rows: 20vh auto minmax(0, 1fr) auto;
+        grid-template-rows: 32vh auto minmax(0, 1fr) auto;
         grid-template-columns: 80px 1fr;
     }
 

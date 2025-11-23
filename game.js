@@ -774,10 +774,31 @@ function drawLayer(d, theme){
         let t='ev'; 
         if(val===TILE.STAIRS) t='ladder'; 
         else if(val===TILE.BOSS) {
-            const bossImg = dungeonData[currentDungeonId].boss.img;
-            if(bossImg) drawImageAt(ctx, bossImg, ix, iy, s);
-            return;
-        } 
+            // 画像描画を削除し、赤いモヤ（グラデーション）を描画
+            ctx.save();
+            const cx = ix + s / 2;
+            const cy = iy + s / 2;
+            
+            // 赤黒い不気味なグラデーションを作成
+            const grad = ctx.createRadialGradient(cx, cy, s * 0.1, cx, cy, s * 0.8);
+            grad.addColorStop(0, "rgba(255, 50, 50, 0.9)");  // 中心：明るい赤
+            grad.addColorStop(0.4, "rgba(150, 0, 0, 0.6)");  // 中間：暗い赤
+            grad.addColorStop(1, "rgba(0, 0, 0, 0)");        // 外側：透明
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, s * 0.8, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // オプション: 中心に禍々しい核を描く
+            ctx.fillStyle = "rgba(50, 0, 0, 0.8)";
+            ctx.beginPath();
+            ctx.arc(cx, cy, s * 0.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+            return; // 描画終了
+        }
         else if(val===TILE.CHEST) t='chest';
         else if(val===TILE.SHOP) t='shop';
         else if(val===TILE.HOLE) t='hole';
@@ -1340,12 +1361,14 @@ function setupBattle(enemyList) {
     originalImg.style.display = 'none';
     originalImg.classList.remove('shake-enemy');
 
+const isMobile = window.innerWidth < 768;
+
     enemies.forEach((e, idx) => {
         const container = document.createElement('div');
         container.id = `enemy-unit-${idx}`;
         container.className = 'dynamic-enemy-container';
         container.style.position = 'absolute';
-        container.style.top = '50%';
+        container.style.top = isMobile ? '42%' : '50%';
         container.style.transform = 'translate(-50%, -50%)';
         container.style.zIndex = '10';
         container.style.textAlign = 'center';
@@ -1367,11 +1390,13 @@ function setupBattle(enemyList) {
         img.src = `${e.img}`;
         img.id = `enemy-img-${idx}`; 
         if (e.isBoss) {
-            img.style.width = '200px';   
-            img.style.height = '240px'; 
+            // ボス: スマホなら0.7倍程度に縮小
+            img.style.width = isMobile ? '140px' : '200px';   
+            img.style.height = isMobile ? '168px' : '240px'; 
         } else {
-            img.style.width = '120px';   
-            img.style.height = '150px';  
+            // 雑魚: スマホなら0.8倍程度に縮小
+            img.style.width = isMobile ? '96px' : '120px';   
+            img.style.height = isMobile ? '120px' : '150px';  
         }
         
         img.style.imageRendering = 'pixelated';
