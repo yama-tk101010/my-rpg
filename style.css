@@ -913,15 +913,22 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
 
 /* 呪文メニューが溢れないようにスクロール可能にする */
 #spell-controls {
-        max-height: 25vh;       /* 画面高さの1/4程度までに制限 */
-        overflow-y: auto;       /* 縦スクロールを有効化 */
-        align-content: start;   /* ボタンを上詰めで表示 */
-        padding-bottom: 40px;   /* ★修正: 余白を大きく広げてボタンが隠れるのを防ぐ */
-        
+    max-height: 25vh;       /* 画面高さの1/4程度までに制限 */
+    overflow-y: auto;       /* 縦スクロールを有効化 */
+    align-content: start;   /* ボタンを上詰めで表示 */
+
+    /* ★修正: 余白をさらに拡大 + iPhone等のホームバー領域(safe-area)を計算に含める */
+    padding-bottom: calc(60px + env(safe-area-inset-bottom));
+    box-sizing: border-box; /* パディングを高さ計算に含める */
+
     -webkit-overflow-scrolling: touch;
-        touch-action: pan-y; /* 縦スクロールを明示的に許可 */
-        /* 既存のグリッド設定(grid-template-columns)はそのまま維持されます */
-    }
+    touch-action: pan-y; /* 縦スクロールを明示的に許可 */
+}
+
+/* ★追加: 最後のボタン（戻るボタン）の下に強制的に余白を作る */
+#spell-controls button:last-child {
+    margin-bottom: 20px;
+}
 
 #spell-controls button {
     touch-action: pan-y;
@@ -930,6 +937,6 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
 /* スマホ縦画面時の微調整 */
 @media (max-width: 768px) {
     #spell-controls {
-        max-height: 220px; /* スマホでは固定ピクセルで高さ制限 */
+        max-height: 250px; /* ★修正: 表示領域を少し広げる */
     }
 }
