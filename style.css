@@ -530,14 +530,12 @@ h1, h2 {
     .town-menu-grid { gap: 8px; }
     .town-action-btn { height: 60px !important; }
 .battle-pad {
-        grid-template-columns: 1fr 1fr 1fr; /* 2列から3列に変更 */
+        grid-template-columns: 1fr 1fr 1fr;
     }
 
-    /* 2. 「逃げる」ボタンの配置調整 */
-    /* HTMLに書かれている style="grid-column:1/-1" を強制的に上書きして、
-       全幅ではなく「残り2列分」を使うようにします */
+    /* ★重要: 以前の「逃げるボタンを2列分にする」設定を打ち消す */
     #battle-controls button:last-child {
-        grid-column: span 2 !important; 
+        grid-column: auto !important;
     }
 }
 /* =========================================
@@ -920,7 +918,13 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
     align-content: start;   /* ボタンを上詰めで表示 */
     padding-bottom: 5px;
     
+-webkit-overflow-scrolling: touch;
+    touch-action: pan-y; /* 縦スクロールを明示的に許可 */
     /* 既存のグリッド設定(grid-template-columns)はそのまま維持されます */
+}
+
+#spell-controls button {
+    touch-action: pan-y;
 }
 
 /* スマホ縦画面時の微調整 */

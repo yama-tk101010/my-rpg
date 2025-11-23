@@ -13,9 +13,9 @@
         <div class="screen-box">
             <h1>🏰 Y_DRPG</h1>
             <div class="story-content" style="margin: 20px 0;">
-                <p>王様の命を受けた3人の冒険者。</p>
-                <p>世界各地に現れた迷宮の謎を解け。</p>
-                <p>伝説となれ。</p>
+                <p>世界に異変が起きている。</p>
+<p>すべての迷宮を踏破せよ。</p>
+<p>平和を取り戻すために。</p>
             </div>
             <button class="btn" style="width:100%;" onclick="startGame()">冒険を始める</button>
         </div>
@@ -216,14 +216,11 @@
             
             <div id="battle-controls" class="controls battle-pad" style="display:none;">
     <button class="btn btn-atk" onclick="fight('attack')">⚔️ 攻撃</button>
-    
     <button class="btn btn-magic" onclick="openSpellMenu()">⚡ 呪文</button>
-    
     <button class="btn btn-def" onclick="fight('defend')">🛡️ 防御</button>
-    
     <button class="btn" onclick="openBattleItemMenu()">💊 アイテム</button>
-    
-    <button class="btn" onclick="fight('run')" style="grid-column:1/-1;">💨 逃げる</button>
+    <div class="spacer"></div>
+    <button class="btn" onclick="fight('run')">💨 逃げる</button>
 </div>
             
             <div id="spell-controls" class="controls spell-pad" style="display:none;">
