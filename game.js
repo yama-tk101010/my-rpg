@@ -236,20 +236,20 @@ const gimmickData = {
 
     // --- 古代神殿 (4) ---
     // B1F
-    "4_1_7_1": {type:'warp', tx:1, ty:7}, // Startエリア -> Goalエリア
-    "4_1_2_7": {type:'warp', tx:1, ty:1}, // 脱出用
+    "4_1_7_1": {type:'warp', tx:2, ty:7}, // Start(1,1) -> Goalエリア(Warpマス 2,7)
+    "4_1_2_7": {type:'warp', tx:1, ty:1}, // 脱出用 (Exitマス 1,1)
 
-    // B2F (ワープ整合性修正)
-    "4_2_1_5": {type:'warp', tx:6, ty:3}, // 左端(1,5) -> 中央エリア(6,3)へ
-    "4_2_3_3": {type:'warp', tx:8, ty:2}, // 中央左(3,3) -> Goalエリア(8,2)へ (正解)
-    "4_2_5_3": {type:'warp', tx:1, ty:7}, // 中央右(5,3) -> Start(1,7)へ (ハズレ)
+    // B2F
+    "4_2_1_5": {type:'warp', tx:5, ty:3}, // 左端(1,5) -> 中央エリア(Warpマス 5,3)
+    "4_2_3_3": {type:'warp', tx:8, ty:2}, // 中央左(3,3) -> Goalエリア(8,2) ※ここは着地用フロアのまま
+    "4_2_5_3": {type:'warp', tx:1, ty:5}, // 中央右(5,3) -> Startエリア(Warpマス 1,5)
 
-    // B3F (座標修正)
-    "4_3_3_1": {type:'warp', tx:6, ty:3}, 
+    // B3F
+    "4_3_3_1": {type:'warp', tx:7, ty:3}, // -> Warpマス 7,3
     "4_3_5_1": {type:'warp', tx:1, ty:1}, 
-    "4_3_7_3": {type:'warp', tx:2, ty:7}, 
+    "4_3_7_3": {type:'warp', tx:1, ty:7}, // -> Warpマス 1,7
     "4_3_1_7": {type:'warp', tx:1, ty:4}, 
-    "4_3_7_7": {type:'warp', tx:8, ty:1} 
+    "4_3_7_7": {type:'warp', tx:8, ty:1}
 };
 // --- ダンジョン・モンスターデータ (Level 10 MAX Balance) ---
 const dungeonData = {
@@ -774,39 +774,36 @@ function drawLayer(d, theme){
         let t='ev'; 
         if(val===TILE.STAIRS) t='ladder'; 
         else if(val===TILE.BOSS) {
-            // 画像描画を削除し、赤いモヤ（グラデーション）を描画
+            // (ボスの描画処理はそのまま)
             ctx.save();
             const cx = ix + s / 2;
             const cy = iy + s / 2;
-            
-            // 赤黒い不気味なグラデーションを作成
             const grad = ctx.createRadialGradient(cx, cy, s * 0.1, cx, cy, s * 0.8);
-            grad.addColorStop(0, "rgba(255, 50, 50, 0.9)");  // 中心：明るい赤
-            grad.addColorStop(0.4, "rgba(150, 0, 0, 0.6)");  // 中間：暗い赤
-            grad.addColorStop(1, "rgba(0, 0, 0, 0)");        // 外側：透明
-
+            grad.addColorStop(0, "rgba(255, 50, 50, 0.9)");
+            grad.addColorStop(0.4, "rgba(150, 0, 0, 0.6)");
+            grad.addColorStop(1, "rgba(0, 0, 0, 0)");
             ctx.fillStyle = grad;
             ctx.beginPath();
             ctx.arc(cx, cy, s * 0.8, 0, Math.PI * 2);
             ctx.fill();
-            
-            // オプション: 中心に禍々しい核を描く
             ctx.fillStyle = "rgba(50, 0, 0, 0.8)";
             ctx.beginPath();
             ctx.arc(cx, cy, s * 0.2, 0, Math.PI * 2);
             ctx.fill();
-
             ctx.restore();
-            return; // 描画終了
+            return; 
         }
         else if(val===TILE.CHEST) t='chest';
         else if(val===TILE.SHOP) t='shop';
-        else if(val===TILE.HOLE) t='hole';
+        else if(val===TILE.HOLE) {
+            // ★修正: 天空の塔(ID=5)以外の場合のみ穴を描画
+            if(currentDungeonId !== 5) t='hole';
+            else return; // 描画しない（床として表示）
+        }
         
         drawIcon(ctx, ix, iy, s, t); 
     }
 }
-
 function drawImageAt(ctx, src, x, y, size) {
     const img = new Image();
     img.src = src;

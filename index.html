@@ -215,12 +215,16 @@
             </div>
             
             <div id="battle-controls" class="controls battle-pad" style="display:none;">
-                <button class="btn btn-atk" onclick="fight('attack')">⚔️ 攻撃</button>
-                <button class="btn btn-magic" onclick="openSpellMenu()">⚡ 呪文</button>
-                <button class="btn" onclick="openBattleItemMenu()">💊 アイテム</button>
-                <button class="btn btn-def" onclick="fight('defend')">🛡️ 防御</button>
-                <button class="btn" onclick="fight('run')" style="grid-column:1/-1;">💨 逃げる</button>
-            </div>
+    <button class="btn btn-atk" onclick="fight('attack')">⚔️ 攻撃</button>
+    
+    <button class="btn btn-magic" onclick="openSpellMenu()">⚡ 呪文</button>
+    
+    <button class="btn btn-def" onclick="fight('defend')">🛡️ 防御</button>
+    
+    <button class="btn" onclick="openBattleItemMenu()">💊 アイテム</button>
+    
+    <button class="btn" onclick="fight('run')" style="grid-column:1/-1;">💨 逃げる</button>
+</div>
             
             <div id="spell-controls" class="controls spell-pad" style="display:none;">
                 <button class="btn" id="btn-spell-flame" onclick="castSpell('flame')">フレイム</button>
