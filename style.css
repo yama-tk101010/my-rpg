@@ -913,15 +913,15 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
 
 /* 呪文メニューが溢れないようにスクロール可能にする */
 #spell-controls {
-    max-height: 25vh;       /* 画面高さの1/4程度までに制限 */
-    overflow-y: auto;       /* 縦スクロールを有効化 */
-    align-content: start;   /* ボタンを上詰めで表示 */
-    padding-bottom: 5px;
-    
--webkit-overflow-scrolling: touch;
-    touch-action: pan-y; /* 縦スクロールを明示的に許可 */
-    /* 既存のグリッド設定(grid-template-columns)はそのまま維持されます */
-}
+        max-height: 25vh;       /* 画面高さの1/4程度までに制限 */
+        overflow-y: auto;       /* 縦スクロールを有効化 */
+        align-content: start;   /* ボタンを上詰めで表示 */
+        padding-bottom: 40px;   /* ★修正: 余白を大きく広げてボタンが隠れるのを防ぐ */
+        
+    -webkit-overflow-scrolling: touch;
+        touch-action: pan-y; /* 縦スクロールを明示的に許可 */
+        /* 既存のグリッド設定(grid-template-columns)はそのまま維持されます */
+    }
 
 #spell-controls button {
     touch-action: pan-y;
