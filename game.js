@@ -1951,24 +1951,72 @@ function playVfx(t, targetIdx=null){
 function initMapUI(){const a=document.getElementById('map-area');a.innerHTML="";for(let y=0;y<mapSize;y++)for(let x=0;x<mapSize;x++){let d=document.createElement('div');d.id=`cell-${x}-${y}`;d.className='cell cell-unknown';a.appendChild(d);}}
 function updatePlayerVision(){[{x:0,y:0},{x:0,y:-1},{x:0,y:1},{x:-1,y:0},{x:1,y:0}].forEach(o=>{let tx=playerPos.x+o.x,ty=playerPos.y+o.y;if(tx>=0&&tx<mapSize&&ty>=0&&ty<mapSize)visitedMaps[currentDungeonId][currentFloor][ty][tx]=true;});}
 function renderMap(){
-    const ar=["▲","▶","▼","◀"];
-    const vis=visitedMaps[currentDungeonId][currentFloor];
-    for(let y=0;y<mapSize;y++)for(let x=0;x<mapSize;x++){
-        const c=document.getElementById(`cell-${x}-${y}`);
-        c.innerText="";
-        if(x===playerPos.x&&y===playerPos.y){c.className='cell cell-hero';c.innerText=ar[playerPos.dir];continue;}
-        if(!vis[y][x]){c.className='cell cell-unknown';continue;}
-        const v=currentMapData[y][x];
-        if(v===TILE.WALL)c.className='cell cell-wall';
-        else if(v===TILE.STAIRS || v===TILE.UP_STAIRS)c.className='cell cell-stairs'; // クラスを適用
-        else if(v===TILE.BOSS)c.className='cell cell-boss';
-        else if(v===TILE.CHEST)c.className='cell cell-chest';
-        else if(v===TILE.SHOP){c.className='cell cell-event';c.innerText='💰';}
-        else if(v===TILE.EXIT)c.className='cell cell-entrance';
-        else if(v===TILE.FLOW){c.className='cell cell-floor';c.innerText='🌊';}
-        else if(v===TILE.WARP){c.className='cell cell-floor';c.innerText='🌀';}
-        else if(v===TILE.HOLE){c.className='cell cell-floor';c.innerText='🕳️';}
-        else c.className='cell cell-floor';
+    const ar = ["▲","▶","▼","◀"]; // 北、東、南、西
+    const vis = visitedMaps[currentDungeonId][currentFloor];
+    
+    for(let y=0; y<mapSize; y++) {
+        for(let x=0; x<mapSize; x++) {
+            const c = document.getElementById(`cell-${x}-${y}`);
+            c.innerText = "";
+            c.className = 'cell'; // 一旦リセット
+
+            // 1. 現在地 (最優先)
+            if(x === playerPos.x && y === playerPos.y) {
+                c.classList.add('cell-hero');
+                c.innerText = ar[playerPos.dir];
+                continue;
+            }
+
+            // 2. 未踏破エリア
+            if(!vis[y][x]) {
+                c.classList.add('cell-unknown');
+                continue;
+            }
+
+            // 3. マップデータに基づく描画
+            const v = currentMapData[y][x];
+            
+            if (v === TILE.WALL) {
+                c.classList.add('cell-wall');
+            } else {
+                // 基本は床
+                c.classList.add('cell-floor');
+
+                // イベントがある場合の追加クラスとアイコン
+                if (v === TILE.STAIRS || v === TILE.UP_STAIRS) {
+                    c.classList.add('cell-stairs');
+                    c.innerText = "≡"; // 階段記号
+                } else if (v === TILE.BOSS) {
+                    c.classList.add('cell-boss');
+                    c.innerText = "💀";
+                } else if (v === TILE.CHEST) {
+                    // 宝箱 (開けたかどうかチェック)
+                    const key = `${currentDungeonId}_${currentFloor}_${x}_${y}`;
+                    if(!openedChests.includes(key)) {
+                        c.classList.add('cell-chest');
+                        c.innerText = "■"; // 宝箱あり
+                    } else {
+                        // 開封済みはただの床にするか、空箱マークにする
+                        c.innerText = "□";
+                        c.style.color = "#666"; // 目立たなくする
+                    }
+                } else if (v === TILE.SHOP) {
+                    c.classList.add('cell-event');
+                    c.innerText = "$";
+                } else if (v === TILE.EXIT) {
+                    c.classList.add('cell-entrance');
+                    c.innerText = "E";
+                } else if (v === TILE.FLOW) {
+                    c.innerText = "~"; // 流水
+                    c.style.color = "#88f";
+                } else if (v === TILE.WARP) {
+                    c.classList.add('cell-event');
+                    c.innerText = "@";
+                } else if (v === TILE.HOLE) {
+                    c.innerText = "O";
+                }
+            }
+        }
     }
 }
 function log(m){const l=document.getElementById('log');l.innerHTML+=`<p>> ${m}</p>`;l.scrollTop=l.scrollHeight;}

@@ -60,7 +60,8 @@ h1, h2 {
     max-width: 700px; 
     height: 95vh; 
     grid-template-rows: auto auto auto 1fr; 
-    grid-template-columns: 110px 1fr; 
+    /* ★修正: 左カラムを110pxから160pxに拡大 (140pxのマップが入るように) */
+    grid-template-columns: 160px 1fr; 
     gap: 5px; 
     padding: 5px; 
     box-sizing: border-box; 
@@ -81,37 +82,125 @@ h1, h2 {
 #enemy-img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; image-rendering: pixelated; display: none; z-index: 10; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.8)); }
 .cave-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0) 30%, rgba(0,0,0,0.8) 100%); pointer-events: none; z-index: 5; }
 
-/* ミニマップ */
+/* =========================================
+   ミニマップ (改修版: 高視認性・デジタル風)
+   ========================================= */
 #map-wrapper { 
     grid-area: 2 / 1 / 3 / 2; 
     justify-self: center; 
-    width: 100px; 
+    width: 140px; /* サイズアップ */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    background: #000;
-    border: 1px solid #333;
-    padding: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
 }
-#floor-display { font-size: 0.8em; color: #ffd700; border-bottom: 1px solid #555; width: 100%; text-align: center; margin-bottom: 5px; }
-#map-area { width: 90px; height: 90px; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); border: 1px solid #555; background: #000; }
+
+#floor-display { 
+    font-size: 0.85em; 
+    color: #ffd700; 
+    border-bottom: 1px solid #555; 
+    width: 100%; 
+    text-align: center; 
+    margin-bottom: 8px; 
+    padding-bottom: 2px;
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+#map-area { 
+    width: 120px; 
+    height: 120px; 
+    display: grid; 
+    grid-template-columns: repeat(10, 1fr); 
+    grid-template-rows: repeat(10, 1fr); 
+    background: #000; 
+    gap: 1px; /* グリッド線を作る */
+    border: 2px solid #333;
+}
+
 .cell { 
     width: 100%; 
     height: 100%; 
-    border: 0.5px solid #222; 
-    box-sizing: border-box; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    font-size: 6px;          
-    color: #fff; 
+    font-size: 8px; /* 文字サイズ調整 */
+    color: transparent; /* 基本は文字を隠して色で識別させる */
     overflow: hidden;        
-    padding: 0;              
-    line-height: 1;          
+    padding: 0;
+    transition: background-color 0.2s;
 }
-.cell-wall { background: #3a2a1a; } .cell-floor { background: #222; } .cell-unknown { background: #000; }
-.cell-hero { background: #444; color: #ff0; font-weight: bold; }
-.cell-stairs { background-color: #444; color: #fa0; } .cell-boss { background-color: #500; } .cell-chest { background-color: #aa0; } .cell-event { background-color: #00a; } .cell-entrance { background-color: #222; color: #0f0; }
+
+/* --- マスの色分け定義 --- */
+
+/* 未踏破: 真っ黒 */
+.cell-unknown { 
+    background-color: #050505; 
+}
+
+/* 床 (踏破済み): 薄い青グレーで「通れる場所」を明確に */
+.cell-floor { 
+    background-color: #3a4a5a; 
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+}
+
+/* 壁: 濃い色だが、未踏破よりは明るくして「壁があること」を示す */
+.cell-wall { 
+    background-color: #555; 
+    /* 斜線パターンを入れて壁っぽさを出す（任意） */
+    background-image: linear-gradient(45deg, #444 25%, transparent 25%, transparent 50%, #444 50%, #444 75%, transparent 75%, transparent);
+    background-size: 4px 4px;
+}
+
+/* --- イベント・オブジェクト (文字色を表示してアイコン化) --- */
+.cell-stairs { 
+    background-color: #3a4a5a; /* 床ベース */
+    color: #0ff !important; /* 水色 */
+    font-weight: bold;
+}
+
+.cell-chest { 
+    background-color: #3a4a5a; 
+    color: #ffd700 !important; /* 金色 */
+    text-shadow: 0 0 2px #fa0;
+}
+
+.cell-event { 
+    background-color: #3a4a5a; 
+    color: #f5f !important; /* ピンク */
+}
+
+.cell-boss { 
+    background-color: #500; 
+    color: #fff !important;
+}
+
+.cell-entrance { 
+    background-color: #3a4a5a;
+    color: #0f0 !important; /* 緑 */
+}
+
+/* --- ヒーロー (現在地) --- */
+.cell-hero { 
+    background-color: #f00 !important; /* 赤背景で目立たせる */
+    color: #fff !important; 
+    font-weight: bold; 
+    border-radius: 2px;
+    box-shadow: 0 0 8px #f00; /* 光らせる */
+    animation: blink-hero 1s infinite alternate; /* 点滅アニメ */
+    z-index: 2;
+}
+
+/* 点滅アニメーション定義 */
+@keyframes blink-hero {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0.7; transform: scale(0.9); }
+}
 
 /* ステータスエリア */
 #status { 
@@ -126,7 +215,23 @@ h1, h2 {
     align-items: flex-start; 
 }
 .party-status { display: flex; flex-direction: column; width: 100%; gap: 3px; }
-.ps-row { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding: 3px 0; width: 100%; }
+.ps-row { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; /* 上下中央揃え追加 */
+    border-bottom: 1px solid #333; 
+    /* ★修正: パディングを少し詰める */
+    padding: 3px 5px; 
+    width: 100%; 
+    box-sizing: border-box; /* はみ出し防止 */
+}
+.ps-row > div:first-child {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 65%; /* 名前の最大幅 */
+    text-align: left;
+}
 .status-right-col { text-align: right; min-width: 100px; display: flex; flex-direction: column; justify-content: space-between; }
 .location-info { font-family: monospace; color: #aaa; font-size: 0.85em; }
 
@@ -434,7 +539,8 @@ h1, h2 {
         gap: 0;
         border: none;
         grid-template-rows: 32vh auto minmax(0, 1fr) auto;
-        grid-template-columns: 80px 1fr;
+        /* ★修正: 左カラムを100pxから130pxに拡大 (マップをさらに大きく) */
+        grid-template-columns: 130px 1fr; 
     }
 
     /* 3. 3Dビュー */
@@ -455,12 +561,18 @@ h1, h2 {
     }
 
     /* 4. マップエリア */
-    #map-wrapper {
-        padding: 2px 0 0 2px;
-        width: 100%;
+    #map-wrapper { 
+        /* ★修正: 幅を90pxから120pxに拡大 */
+        width: 120px; 
+        padding: 4px; 
     }
-    #map-area { width: 76px; height: 76px; }
-    .cell { font-size: 4px; }
+    #map-area { 
+        /* ★修正: マップ本体を80pxから110pxに拡大 */
+        width: 110px; 
+        height: 110px; 
+        gap: 0.5px; 
+    }
+    .cell { font-size: 7px; } /* 文字も少し大きく */
 
     /* 5. ステータスエリア */
     #status {
@@ -472,7 +584,7 @@ h1, h2 {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        font-size: 0.8em;
+        font-size: 0.75em; 
     }
     .status-right-col {
         width: 100%;
@@ -482,7 +594,10 @@ h1, h2 {
     }
     /* ② HP位置調整: 右paddingを 25px に設定 */
     .ps-row { 
-        padding: 2px 25px 2px 4px; 
+        padding: 2px 2px 2px 4px; 
+    }
+.ps-row > div:first-child {
+        max-width: 50%; /* 名前エリアを半分以下に制限 */
     }
 
     /* 6. ログエリア */
@@ -495,13 +610,21 @@ h1, h2 {
         background: rgba(0,0,0,0.6);
         border: 1px solid #333;
         overflow-y: auto;
+        
+        /* ★修正: 高さをPC版(12vh/min100px)より小さくしてスペースを空ける */
+        height: 10vh;      
+        min-height: 60px;
     }
     #battle-msg { margin: 0; padding: 2px; font-size: 0.9em; }
 
     /* 7. コントローラー */
     .controls {
         width: 100%;
-        padding: 2px 2px 5px 2px;
+        /* ★修正: 下のパディングを5pxから20pxに増やしてボタンを上に持ち上げる */
+        padding: 2px 2px 20px 2px;
+        /* iPhoneなどのホームバー(Safe Area)対策 */
+        padding-bottom: calc(20px + env(safe-area-inset-bottom));
+        
         box-sizing: border-box;
         align-self: end;
         gap: 3px;
