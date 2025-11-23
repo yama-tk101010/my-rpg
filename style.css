@@ -529,6 +529,16 @@ h1, h2 {
     }
     .town-menu-grid { gap: 8px; }
     .town-action-btn { height: 60px !important; }
+.battle-pad {
+        grid-template-columns: 1fr 1fr 1fr; /* 2列から3列に変更 */
+    }
+
+    /* 2. 「逃げる」ボタンの配置調整 */
+    /* HTMLに書かれている style="grid-column:1/-1" を強制的に上書きして、
+       全幅ではなく「残り2列分」を使うようにします */
+    #battle-controls button:last-child {
+        grid-column: span 2 !important; 
+    }
 }
 /* =========================================
    全体デザイン・リファイン (All UI Overhaul)
