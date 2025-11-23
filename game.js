@@ -256,7 +256,7 @@ const dungeonData = {
         theme: { ceil: "#1a1a1a", floor: "#3d342b", wallBaseRGB: [107, 91, 69], wallStroke: "#111" },
         enemies: [
             // 初期装備(攻撃力10前後)で2-3発で倒せるくらい
-            {name:"スライム", hp:18, exp:9999, gold:5, img:"slime.png", elem:ELEM.WATER, effect:"poison", rate:0.2, minFloor:1},
+            {name:"スライム", hp:18, exp:4, gold:5, img:"slime.png", elem:ELEM.WATER, effect:"poison", rate:0.2, minFloor:1},
             {name:"ゴブリン", hp:28, exp:6, gold:8, img:"goblin.png", elem:ELEM.EARTH, minFloor:1},
             {name:"オーク", hp:45, exp:10, gold:12, img:"orc.png", elem:ELEM.EARTH, minFloor:3}
         ],
