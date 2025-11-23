@@ -910,3 +910,22 @@ button[onclick^="close"], button[onclick^="exit"], button[onclick^="return"] {
         grid-template-columns: 1fr; /* 縦積みに */
     }
 }
+
+/* --- 修正・追加 --- */
+
+/* 呪文メニューが溢れないようにスクロール可能にする */
+#spell-controls {
+    max-height: 25vh;       /* 画面高さの1/4程度までに制限 */
+    overflow-y: auto;       /* 縦スクロールを有効化 */
+    align-content: start;   /* ボタンを上詰めで表示 */
+    padding-bottom: 5px;
+    
+    /* 既存のグリッド設定(grid-template-columns)はそのまま維持されます */
+}
+
+/* スマホ縦画面時の微調整 */
+@media (max-width: 768px) {
+    #spell-controls {
+        max-height: 220px; /* スマホでは固定ピクセルで高さ制限 */
+    }
+}

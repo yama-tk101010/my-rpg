@@ -256,7 +256,7 @@ const dungeonData = {
         theme: { ceil: "#1a1a1a", floor: "#3d342b", wallBaseRGB: [107, 91, 69], wallStroke: "#111" },
         enemies: [
             // 初期装備(攻撃力10前後)で2-3発で倒せるくらい
-            {name:"スライム", hp:18, exp:4, gold:5, img:"slime.png", elem:ELEM.WATER, effect:"poison", rate:0.2, minFloor:1},
+            {name:"スライム", hp:18, exp:9999, gold:5, img:"slime.png", elem:ELEM.WATER, effect:"poison", rate:0.2, minFloor:1},
             {name:"ゴブリン", hp:28, exp:6, gold:8, img:"goblin.png", elem:ELEM.EARTH, minFloor:1},
             {name:"オーク", hp:45, exp:10, gold:12, img:"orc.png", elem:ELEM.EARTH, minFloor:3}
         ],
@@ -322,26 +322,31 @@ const fixedChestData = {
 
 // --- スキルデータ (spellData) の修正 ---
 const spellData = {
-    // ... (既存の魔法はそのまま) ...
+    // ... (既存の fire, wind, earth, water, escape はそのまま) ...
     fire: { name:"ファイア", type:"attack", element:ELEM.FIRE, target:"single", power:25, stat:"int", cost:3 },
     wind: { name:"ウィンド", type:"attack", element:ELEM.WIND, target:"single", power:25, stat:"int", cost:3 },
     earth: { name:"ロック", type:"attack", element:ELEM.EARTH, target:"single", power:25, stat:"int", cost:3 },
     water: { name:"アクア", type:"attack", element:ELEM.WATER, target:"single", power:25, stat:"int", cost:3 },
-    firestorm: { name:"火炎嵐", type:"attack", element:ELEM.FIRE, target:"all", power:20, stat:"int", cost:5 },
-    blizzard: { name:"吹雪", type:"attack", element:ELEM.WATER, target:"all", power:20, stat:"int", cost:5 },
+    
+    // ★削除: firestorm, blizzard
+    // ★追加: 闇単体、無属性高火力
+    dark: { name:"ダーク", type:"attack", element:ELEM.DARK, target:"single", power:50, stat:"int", cost:6 },
+    meteor: { name:"メテオ", type:"attack", element:ELEM.NONE, target:"single", power:90, stat:"int", cost:12 },
+
     escape: { name:"エスケープ", type:"util", target:"self", cost:1 },
     
-    // ★修正: 蘇生制限のためヒールの説明等はロジック側で制御しますが、データはそのまま
     heal: { name:"ヒール", type:"heal", target:"single", power:35, stat:"pie", cost:3 },
     healall: { name:"ヒールオール", type:"heal", target:"all", power:25, stat:"pie", cost:6 },
-    
-    // ★追加: 蘇生魔法
     raise: { name:"レイズ", type:"revive", target:"single", power:0, stat:"pie", cost:10, desc:"戦闘不能を回復" },
 
     light: { name:"ライト", type:"attack", element:ELEM.LIGHT, target:"single", power:30, stat:"pie", cost:4 },
-    holy: { name:"ホーリー", type:"attack", element:ELEM.LIGHT, target:"all", power:40, stat:"pie", cost:7 },
-    buffDef: { name:"プロテクト", type:"buff", target:"single", effect:"defUp", turns:3, cost:4 },
-    buffAtk: { name:"バイキルト", type:"buff", target:"single", effect:"atkUp", turns:3, cost:4 },
+    
+    // ★変更: holy -> highHeal (単体高回復)
+    highHeal: { name:"ハイヒール", type:"heal", target:"single", power:100, stat:"pie", cost:8 },
+
+    // ... (buffDef以降はそのまま) ...
+    buffDef: { name:"プロテクト", type:"buff", target:"single", effect:"defUp", turns:6, cost:4 },
+    buffAtk: { name:"バイキルト", type:"buff", target:"single", effect:"atkUp", turns:6, cost:4 },
     slash: { name:"強斬り", type:"phys", element:ELEM.NONE, target:"single", mult:1.5, cost:3 },
     sweep: { name:"なぎ払い", type:"phys", element:ELEM.NONE, target:"all", mult:0.8, cost:3 },
     double: { name:"二段斬り", type:"phys", element:ELEM.NONE, target:"single", mult:2.2, cost:4 },
@@ -351,12 +356,15 @@ const spellData = {
 
 // --- 職業データ (jobData) の修正 ---
 const jobData = {
+    // ... (勇者、戦士はそのまま) ...
     hero: { name: "勇者", icon: "👑", baseStats: { str:12, int:9, pie:9, vit:10, agi:9, luc:9 }, learnset: { 1:['slash'], 2:['heal'], 3:['fire'], 5:['wind','buffDef'], 7:['earth','water'], 9:['cross'] }, canEquip: ['sword','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], desc:"万能型。" },
     warrior: { name: "戦士", icon: "⚔️", baseStats: { str:14, int:5, pie:5, vit:12, agi:7, luc:7 }, learnset: { 1:['slash'], 3:['sweep'], 6:['double'], 9:['charge'] }, canEquip: ['sword','axe','heavyShield','lightShield','armor','clothes','helm','hat','gauntlet','gloves','acc'], desc:"物理攻撃特化。" },
-    mage: { name: "魔法使い", icon: "🪄", baseStats: { str:6, int:14, pie:7, vit:6, agi:10, luc:8 }, learnset: { 1:['fire'], 2:['wind'], 4:['earth'], 5:['water','escape'], 7:['firestorm'], 9:['blizzard'] }, canEquip: ['staff','clothes','hat','gloves','lightShield','acc'], desc:"攻撃魔法のエキスパート。" },
     
-    // ★修正: 僧侶のレベル5に 'raise' を追加
-    priest: { name: "僧侶", icon: "✝️", baseStats: { str:8, int:8, pie:14, vit:8, agi:7, luc:8 }, learnset: { 1:['heal'], 3:['light'], 4:['buffDef'], 5:['raise'], 6:['healall'], 8:['buffAtk'], 10:['holy'] }, canEquip: ['mace','staff','lightShield','clothes','hat','gloves','acc'], desc:"回復と支援の要。" }
+    // ★変更: 魔法使い (Lv7: firestorm -> dark, Lv9: blizzard -> meteor)
+    mage: { name: "魔法使い", icon: "🪄", baseStats: { str:6, int:14, pie:7, vit:6, agi:10, luc:8 }, learnset: { 1:['fire'], 2:['wind'], 4:['earth'], 5:['water','escape'], 7:['dark'], 9:['meteor'] }, canEquip: ['staff','clothes','hat','gloves','lightShield','acc'], desc:"攻撃魔法のエキスパート。" },
+    
+    // ★変更: 僧侶 (Lv10: holy -> highHeal)
+    priest: { name: "僧侶", icon: "✝️", baseStats: { str:8, int:8, pie:14, vit:8, agi:7, luc:8 }, learnset: { 1:['heal'], 3:['light'], 4:['buffDef'], 5:['raise'], 6:['healall'], 8:['buffAtk'], 10:['highHeal'] }, canEquip: ['mace','staff','lightShield','clothes','hat','gloves','acc'], desc:"回復と支援の要。" }
 };
 
 // tier: 1=初期, 2=序盤(店売り上限), 3=中盤, 4=終盤, 5=最強
@@ -1595,9 +1603,16 @@ function processQueue() {
             }
         } else if (spell.type === 'buff') {
             playVfx('heal'); const t = party[act.targetIndex];
-            // (省略: 変更なし)
-            if(spell.effect === 'defUp') { t.buffs.def = 3; log(`${t.name}の防御力が上がった！`); }
-            if(spell.effect === 'atkUp') { t.buffs.atk = 3; log(`${t.name}の攻撃力が上がった！`); }
+            
+            // ★修正: 固定の「3」ではなく「spell.turns」を使うように変更
+            if(spell.effect === 'defUp') { 
+                t.buffs.def = spell.turns; // ← ここを 3 から spell.turns に変更
+                log(`${t.name}の防御力が上がった！`); 
+            }
+            if(spell.effect === 'atkUp') { 
+                t.buffs.atk = spell.turns; // ← ここを 3 から spell.turns に変更
+                log(`${t.name}の攻撃力が上がった！`); 
+            }
         } else if (spell.type === 'util' && act.spellKey === 'escape') {
             log(`${actor.name}はエスケープを唱えた！`); endBattle(); returnToTown(true); return;
         } else if (spell.type === 'attack' || spell.type === 'phys') {
